@@ -1,16 +1,16 @@
 <template>
-  <div class="bb-custom-wrapper">    
+  <div class="bb-custom-wrapper h-100">    
   	<h3 class="text-center mt-3">Content</h3>
     <div class="bb-bookblock mx-auto mt-5" v-if="books.length" id="bb-bookblock">
       <div class="bb-item" v-for="(el,index) in books" :style="{backgroundColor:el.name,zIndex:Math.abs(index - books.length)}" :ref="index" :key="index">        
         <p class="content left-content">
-          {{el[0]['2'].cont}}          
+          {{el['1'] ? el['1'].cont : ''}}
         </p>
-        <p class="page">{{el[0]['2'].page}}</p>
+        <p class="page">{{el['1'] ? el['1'].page : ''}}</p>
         <p class="content right-content">
-          {{el[1]['2'].cont}}          
+          {{el['2'] ? el['2'].cont : ''}}
         </p>
-        <p class="page2">{{el[1]['2'].page}}</p>
+        <p class="page2">{{el['2'] ? el['2'].page : ''}}</p>
       </div>
     </div>
     <h1 v-else class="text-center">No content</h1>      
@@ -60,22 +60,7 @@ export default {
   }),  
   methods:{
     initialize(){
-      this.books = this.$route.params.bk;    
-      let result = [];
-      for(let i=0;i<=this.books.length;i++){
-        let arr = [];
-        if (this.books[i]){        
-          if (this.books[i+1] && this.books[i+1]['2']) {           
-            arr.push(this.books[i],this.books[i+1]);
-          }else{
-            arr.push(this.books[i],{'2':{cont:'',page:i+2}});
-          }                
-          result.push(arr)
-          i++;
-          continue
-        }      
-      }
-      this.books = result;      
+      this.books = this.$route.params.bk;
     },
     bookblock(){
       var Page = (function() {
