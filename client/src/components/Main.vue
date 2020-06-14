@@ -1,19 +1,21 @@
 <template>
   <div class="books">
-    <h2 class="text-center my-3">Choose your content type</h2>
-    <div class="card mx-auto" v-for="obj in paths">
-      <div class="card-body">
-        <p class="text-center">
-          <router-link tag="a" :to="{path:obj.path}" class="card-title text-center">{{obj.name}}</router-link>
-        </p>
-      </div>
+    <h3 class="center-align title">Choose your content type</h3>
+    <div class="center-block" v-for="obj in paths">
+      <p class="center">
+        <router-link tag="a" :to="{path:obj.path}" class="">
+          {{obj.name}}
+        </router-link>
+      </p>
     </div>
   </div>
 </template>
 
-<style scoped>  
-  .books{        
-  }    
+<style scoped>
+  .title {
+    margin-top: 8%;
+    margin-bottom: 40px;
+  }
   .book{
     height: 300px;
   }

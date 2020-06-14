@@ -1,5 +1,5 @@
 <template>
-  <div class="bb-custom-wrapper h-100">    
+  <div class="bb-custom-wrapper">    
   	<h3 class="text-center mt-3">Content</h3>
     <div class="bb-bookblock mx-auto mt-5" v-if="books.length" id="bb-bookblock">
       <div class="bb-item" v-for="(el,index) in books" :style="{backgroundColor:el.name,zIndex:Math.abs(index - books.length)}" :ref="index" :key="index">        
@@ -26,6 +26,12 @@
 <style scoped>  
   .content{
     position: absolute;
+  }
+  .bb-custom-wrapper {
+    min-height: 100vh;
+  }
+  #bb-bookblock {
+    height: 100vh;
   }
   .left-content{
     width: 48%;

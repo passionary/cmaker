@@ -3,12 +3,10 @@
     <h3 class="text-center mt-3">Content</h3>
     <div class="mx-auto mt-5 d-flex justify-content-around flex-wrap" v-if="books">
       <div class="child mt-3" v-for="(el,index) in books" :key="index">        
-      <p class="title text-center"><a href="" @click.prevent="$router.push({name:'book',params:{bk:el.content}})">{{el.name}}</a></p>
+      <p class="title text-center"><a href="" @click.prevent="$router.push({name:'book',params:{bk:el.content}})" class="text">{{el.name}}</a></p>
       </div>
     </div>
-    <h1 v-else class="text-center">No content</h1>    
-    <!-- <button class="btn btn-primary ml-4 toggler" @click="addClass">next</button>
-    <button class="btn btn-primary ml-4 toggler2" @click="backClass">back</button> -->
+    <h1 v-else class="text-center">No content</h1>
   </div>
 </template>
 

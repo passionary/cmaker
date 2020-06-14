@@ -7,8 +7,6 @@
       </div>
     </div>
     <h1 v-else class="text-center">No content</h1>    
-    <!-- <button class="btn btn-primary ml-4 toggler" @click="addClass">next</button>
-    <button class="btn btn-primary ml-4 toggler2" @click="backClass">back</button> -->
   </div>
 </template>
 

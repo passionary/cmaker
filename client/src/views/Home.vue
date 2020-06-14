@@ -1,108 +1,108 @@
 <template>
-  <div class="container-fluid">      	
-  	<header>
-  		<h3 class="text-left"><span>B</span>ookmaker</h3>
-  	</header>
-  	<div class="d-flex content">
-  		<aside>  			
-  			<p v-for="item in navItems">
-  				<router-link :to="item.path" :class="{'current-link':item.path == $route.path}">{{item.name}}</router-link>
-  			</p>  			
-	  	</aside>
-	  	<main>	  		
+  <div class="root">  		
+		<div class="row">
+			<main class="col s8 m8">
+				<div class="title">
+					<p class="center-align"><i>App for content making</i></p>
+					<p>
+						Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam expedita nisi fugit odit ipsa consequatur, omnis rerum, soluta laudantium ab in ea libero. Hic praesentium, aperiam, perspiciatis at voluptatibus nesciunt accusamus sunt placeat rem esse fuga sint velit. Delectus beatae ex at illo earum perspiciatis consectetur, blanditiis modi voluptas nulla?
+					</p>					
+				</div>
 	  		<router-view />
 	  	</main>
-  	</div>  	
+	  	<div class="wrapper col s4 m4 red lighten-2">
+	  		<p class="right-align logo"><a href="/" class="l-text white-text"></a><i class="material-icons white-text">book</i></p>
+	  		<nav class="nav-wrapper">  				  		
+	  			<a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>  			
+	  			<ul id="nav-mobile" class="center hide-on-med-and-down">
+	  				<li v-for="item in navItems" :class="{'active':item.path == $route.path}">
+	  					<router-link tag="a" :to="item.path">
+		  					{{item.name}}
+		  				</router-link>
+	  				</li>
+	  			</ul>
+	  		</nav>
+	  	</div>	  	
+		</div>  	
   </div>	
 </template>
 <style scoped>
-	a{
-		text-decoration: none !important;
+	.title {
+		width: 60%;
+		margin: 0 auto;
+		font-family: VarelaRound-Regular;
 	}
-	main{
-		background: #fff;				
-		height: inherit;
-		width: 100%;
+	.title i {
+		border-bottom: 1px solid #000;
 	}
-	.content{
-		min-height: 565px;
-	}
-	.current-link{
-		color:yellow;
-	}
-	.container-fluid{		
-		position: relative;
-		z-index: 10;				
-		padding: 10px 10px 0 10px;
-	}
-	header{				
-		height: 50px;
-		border-radius: 2px;
-		z-index: 20;	
-		padding-top: 12px;	
-		background: #33393A;
+	.active {
+		text-transform: uppercase;
+		background: #616161;
 	}	
-	h3{
-		letter-spacing: 1px;
-		margin-left: 26px;
+	.active a {
 		color: #fff;
-		font-style: italic;
-		margin-top: -4px;
-		font-size: 19px;
-	}		
-	aside p{		
-		width: 95%;				
-		padding: 20px 0 10px 0;
-		border-bottom: 2px solid white;
-		text-align: right;
-	}			
-	aside p:after{
-		content:'';
-		display: inline-block;
-		width: 20px;
-		height: 2px;
-		background: #fff;
-		position: relative;
-		z-index: 1;
-		-webkit-transform: rotate(-4deg);
-		-ms-transform: rotate(-45deg);
-		-o-transform: rotate(-45deg);
-		transform: rotate(-30deg);
-		top:15px;
-		left: 19px;
+		opacity: 1;
 	}
-	aside p a{
-		color: #fff;
-		letter-spacing: .7px;
-		margin-right: -5px;
-		font-size: 18px;		
+	ul li a {
+		font-family: VarelaRound-Regular;		
+		font-size: 1.4rem;
+		letter-spacing: 2px;
+		opacity: 0.6;
+	}
+	.row {
+		min-height: inherit;
+	}
+	.logo i{
+		font-size: 17px;
+		margin-right: 3px;
+		margin-top: 3px;
 	}	
-	aside{	
-		border-bottom-left-radius:2px;
-		border-top-left-radius:2px;
-		padding-top: 35px;						
-		min-width: 276px;
-		background: #64B1C1;
+	.l-text {
+		vertical-align: top;
+		/*font-family: VarelaRound-Regular;*/
+		font-size: 14px;
+		margin-right: 2px;
 	}	
-	h3 span{
-		color: #f0f68b;
-		font-size: 30px;		
+	.wrapper {
+		min-height: inherit;	
+	}
+	.nav-wrapper{
+		min-height: inherit;		
+	}
+	main {
+		min-height: inherit;
+	}
+	#nav-mobile {
+		display: -webkit-flex;
+		display: -moz-flex;
+		display: -ms-flex;
+		display: -o-flex;
+		display: flex;
+		flex-direction: column;
+	}
+	.root {
+		min-height: 100vh;
+	}
+	.brand-logo {
+		margin-left: 5rem;
 	}
 </style>
 <script>
-// @ is an alias to /src
 export default {
   name: 'home',
   data:() => ({
   	navItems:
 	  	[
-		  	{name:'HOME',path:'/'},
-		  	{name:'WATCH YOUR BOOKS',path:'/self-books'},
-		  	{name:'WATCH YOUR ARTICLES',path:'/self-articles'},
-		  	{name:'WATCH YOUR VIDEOS',path:'/self-videos'},
+		  	{name:'home',path:'/'},
+		  	{name:'your books',path:'/self-books'},
+		  	{name:'your articles',path:'/self-articles'},
+		  	{name:'your videos',path:'/self-videos'},
 	  	]	
   }),
-  mounted(){  	
+  mounted(){
+  	 $(document).ready(function(){
+	    $('.sidenav').sidenav();
+	  });
   }
 }
 </script>
