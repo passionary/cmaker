@@ -7,10 +7,7 @@
   	<input type="text" class="form-control w-50 mx-auto my-3" placeholder="book-name" v-model="name">
   	<div class="articles d-flex justify-content-between flex-wrap">
   		<div class="form-group article d-flex justify-content-between flex-wrap" v-for="list in lists" ref="article" :key="list.page">
-	    	<div class="top w-100 h-25 d-flex justify-content-between">
-	    		<input type="text" :name="list.page" placeholder="title" @change="save">
-	    		<p>{{list.page}}</p>	
-	    	</div>    	
+	    	<input type="text" :name="list.page" placeholder="title" @change="save($event)">
 	    	<textarea :name="list.page" id="" cols="30" rows="10" class="form-control h-75" placeholder="description" @change="save($event)"></textarea>   
 	    </div>
   	</div>    
@@ -101,7 +98,7 @@ export default {
   	}
   },
   mounted(){  	
-   	this.bookFuller();    
+   	this.bookFuller();
   }
 }
 </script>
