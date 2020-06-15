@@ -13,15 +13,21 @@
   src: url(https://fonts.gstatic.com/s/materialicons/v52/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2) format('woff2');
 }
 @font-face {
-  font-family: 'BalsamiqSans-Bold';
-  src: url(/fonts/BalsamiqSans-Regular.ttf);
+  font-family: 'TitilliumWeb-LightItalic';
+  src: url(/fonts/static/JosefinSans-ThinItalic.ttf);
 }
-
 @font-face {
-  font-family: 'VarelaRound-Regular';
-  src: url(/fonts/VarelaRound-Regular.ttf);
+  font-family: 'JosefinSans-Regular';
+  src: url(/fonts/prompt/Prompt-Regular.ttf);
 }
-
+@font-face {
+  font-family: 'AlegreyaSans-Regular';
+  src: url(/fonts/alegra/AlegreyaSans-Regular.ttf);
+}
+@font-face {
+  font-family: 'AlegreyaSans-Thin';
+  src: url(/fonts/alegra/AlegreyaSans-Thin.ttf);
+}
 .material-icons {
   font-family: 'Material Icons';
   font-weight: normal;
