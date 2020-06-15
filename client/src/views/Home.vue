@@ -15,20 +15,22 @@
 	  					<span>Cmaker</span>
 	  				</span>  				
 	  			</span>
-	  			<div class="desc">
+	  			<div class="desc" @click="show($event)">
 	  				<span>app for content making</span>
 	  				<i class="material-icons">info_outline</i>
 	  			</div>	  			
   			</div>  			
   			<div class="full-desc">
-  				<h5 class="center-align">Description</h5>
+  				<h5 class="center-align">
+  					<button class="btn hiddler" @click="hide($event)">hide</button>Description
+  					<i class="material-icons" @click="show($event)">info</i>
+  				</h5>
   				<span>
 						This is a application for content making.
 						What a content you want make?
 						That may be: <b>books,</b> <b>articles</b> and <b>video</b>.						
   				</span>
-  			</div>
-  			<p class="center-align m-toggle"><a href="#"><i class="material-icons">menu</i></a></p>
+  			</div>  			
   			<ul id="nav-mobile" class="center">
   				<li v-for="item in navItems" :class="{'active':item.path == $route.path}">
   					<router-link tag="a" :to="item.path">
@@ -62,7 +64,12 @@
 		width: 61.5%;
 		height: 100%;
 		background: #e8e8e8;
+		cursor: pointer;
 		position: relative;
+	}
+	.hiddler {
+		position: absolute;
+		left:0;
 	}
 	.desc > span {
 		position: absolute;
@@ -73,7 +80,7 @@
 		font-size: 16px;
 		left:8%;
 	}
-	.desc i {
+	.desc i {		
 		position: absolute;
 		color: #000;
 		font-size: 17px;
@@ -99,29 +106,31 @@
 	.full-desc {
 		margin-bottom: 20px;
 		font-family: AlegreyaSans-Thin;		
-		margin-top: 20px;
+		margin-top: 4px;
 		padding: 0 20px 0 24px;
+		height: 183.5px;
+		overflow: hidden;
 		line-height: 1.5;
 	}
 	.full-desc span {
 		font-size: 21px;		
+		overflow: hidden;
+		text-overflow: hidden;
 		letter-spacing: 1px;
 	}
 	.full-desc h5 {
+		position: relative;
 		font-weight: bold;
+		margin-top: 22px;
 		letter-spacing: 2px;
 		padding-bottom: 5px;
 	}
-	.full-desc h5:after{
-		content:'';
-		display: block;
-		height: 1px;
-		width: 16px;
+	.full-desc h5 > i{
 		position: relative;
-		top:5px;
+		top:-64px;
+		height: 0;
+		font-size: 21px;
 		opacity: 0.5;
-		background: #fff;
-		left:46.6%;
 	}
 	.top-side > span > span {
 		margin-left: 3px;
@@ -175,6 +184,7 @@
 		letter-spacing: 2px;
 	}
 	ul li {
+		background: #c5c5c5;
 		box-shadow: 0 0 2px inset #fff;
 		/*opacity: .8;*/
 	}
@@ -200,6 +210,7 @@
 	.nav-wrapper{
 		box-shadow: -1px 1px 5px #737373;
 		padding: 0;
+		position: relative;
 		background: #c5c5c5;
 		min-height: inherit;		
 	}
@@ -207,7 +218,9 @@
 		min-height: inherit;
 	}
 	#nav-mobile {
+		position: absolute;
 		height: 63%;
+		width: 100%;
 		border-bottom: 1px solid #fff;
 		display: -webkit-flex;
 		display: -moz-flex;
@@ -224,23 +237,12 @@
 	}
 	.brand-logo {
 		margin-left: 5rem;
-	}
-	@media screen and (max-width: 1025px) {
-		#nav-mobile {
-			display: none;
+	}	
+	@media screen and (max-width: 1125px) {
+		.full-desc span {
+			font-size: 17px;
 		}
-		.m-toggle {
-			display: block;
-		}
-	}
-	@media screen and (min-width: 1026px) {
-		#nav-mobile {
-			display: flex;
-		}
-		.m-toggle {
-			display: none;
-		}	
-	}
+	}	
 </style>
 <script>
 export default {
@@ -254,6 +256,26 @@ export default {
 		  	{name:'your videos',path:'/self-videos'},
 	  	]	
   }),
+  methods: {
+  	hide(e){
+  		if(parseInt($('#nav-mobile').css('top')) > 200){
+  			$('#nav-mobile').animate({
+	  			top: '-=207'
+	  		})
+		  	$('#nav-mobile li').animate({height:'148px'},'ease')
+		  	$('#nav-mobile li a').animate({paddingTop:'15%'},'ease')
+  		}  		
+  	},
+  	show(e){  		
+  		if(parseInt($('#nav-mobile').css('top')) < 260){
+  			$('#nav-mobile li').animate({height:'97px'})
+  			$('#nav-mobile li a').animate({paddingTop:'5.5%'},'ease')
+  			$('#nav-mobile').animate({
+	  			top: '+=207'
+	  		})
+  		}  		
+  	}
+  },
   mounted(){
   	$(document).ready(function(){
 	    $('.m-toggle').click(function(){
