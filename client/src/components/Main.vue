@@ -1,6 +1,6 @@
 <template>
   <div class="books">
-    <h3 class="center-align title">Choose your content type</h3>
+    <h3 class="center-align title">What a content you want create?</h3>
     <div class="center-block" v-for="obj in paths">
       <p class="center">
         <router-link tag="a" :to="{path:obj.path}" class="">
@@ -13,7 +13,7 @@
 
 <style scoped>
   .title {
-    margin-top: 8%;
+    margin-top: 17%;
     margin-bottom: 40px;
   }
   .book{

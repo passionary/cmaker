@@ -6,13 +6,12 @@
 					<p class="center-align"></p>					
 				</div>
 	  		<router-view />
-  	</main>  		
+  		</main>
   		<nav class="nav-wrapper col s3">
   			<div class="top-wrapper">
   				<span class="top-side">
 	  				<span>
-	  					<i class="menu-icon material-icons">book</i>
-	  					<span>Cmaker</span>
+	  					<span><b>C</b>maker</span>
 	  				</span>  				
 	  			</span>
 	  			<div class="desc" @click="show($event)">
@@ -20,15 +19,20 @@
 	  				<i class="material-icons">info_outline</i>
 	  			</div>	  			
   			</div>  			
-  			<div class="full-desc">
-  				<h5 class="center-align">
-  					<button class="btn hiddler" @click="hide($event)">hide</button>Description
-  					<i class="material-icons" @click="show($event)">info</i>
+  			<div class="full-desc" @click="hide($event)">
+  				<span class="">
+						<i class="material-icons hiddler">
+							done
+						</i> 						
+					</span>
+  				<h5 class="center-align">  					
+  					Description
+  					<i class="material-icons">terrain</i>
   				</h5>
   				<span>
 						This is a application for content making.
 						What a content you want make?
-						That may be: <b>books,</b> <b>articles</b> and <b>video</b>.						
+						That may be: <span>books,</span> <span>articles</span> and <span>video</span>.						
   				</span>
   			</div>  			
   			<ul id="nav-mobile" class="center">
@@ -42,11 +46,7 @@
 		</div>  	
   </div>	
 </template>
-<style scoped>
-	.menu-icon {
-		font-size: 17px;
-		margin-left: 10px;
-	}	
+<style scoped>	
 	.top-side {
 		display: -webkit-flex;
 		display: -moz-flex;
@@ -59,32 +59,63 @@
 		justify-content: space-between;
 		padding-right: 15px;
 		display: flex;
+	}
+	.top-side > span {
+		position: absolute;
+		top:-4px;
+		left:8.5px;
+		font-size: 15px;
+		color: #000;
+		letter-spacing: 2px;
+		display: -webkit-flex;
+		display: -moz-flex;
+		display: -ms-flex;
+		display: -o-flex;
+		display: flex;
 	}	
+	.top-side > span > span {
+		font-family: LibreBaskerville-Regular;
+		margin-top: -1px;
+		margin-left: 23px;
+		font-size: 13px;
+	}
+	.top-side > span b {
+		color: #c0c0c0;
+		margin-right: 1px;
+	}
 	.desc {
 		width: 61.5%;
 		height: 100%;
-		background: #e8e8e8;
+		background: #eeeeee;
 		cursor: pointer;
 		position: relative;
 	}
 	.hiddler {
 		position: absolute;
-		left:0;
-	}
+		animation:hidder 1s ease infinite alternate;
+		bottom:-.5%;
+		opacity: 0.8;
+		right:13px;
+		color: #79e3a4;
+		font-size: 30px;
+		cursor:pointer;
+	}	
 	.desc > span {
 		position: absolute;
-		top:-5px;
+		top:-6px;
 		margin: 0;
 		font-family: TitilliumWeb-LightItalic;
+		letter-spacing: -.2px;
 		color: #000;
-		font-size: 16px;
-		left:8%;
+		font-size: 17px;
+		left:6.4%;
 	}
 	.desc i {		
 		position: absolute;
-		color: #000;
-		font-size: 17px;
-		right:10px;
+		color: #777777;
+		font-size: 22px;
+		top:-2px;
+		right:8px;
 	}
 	.top-wrapper > em {
 		position: absolute;
@@ -104,58 +135,43 @@
 		justify-content: space-between;
 	}
 	.full-desc {
-		margin-bottom: 20px;
-		font-family: AlegreyaSans-Thin;		
-		margin-top: 4px;
-		padding: 0 20px 0 24px;
-		height: 183.5px;
+		position: relative;
+		font-family: AlegreyaSans-Thin;
+		cursor: pointer;
+		border-top: .5px solid rgba(58,58,58,0.2);
+		padding: 0 20px 0 32px;
+		height: 203.5px;
 		overflow: hidden;
 		line-height: 1.5;
 	}
 	.full-desc span {
-		font-size: 21px;		
+		font-size: 17px;		
 		overflow: hidden;
+		color: #fff;
 		text-overflow: hidden;
 		letter-spacing: 1px;
+	}	
+	.full-desc span > span {
+		font-style: italic;
 	}
 	.full-desc h5 {
+		color: #fff;		
 		position: relative;
-		font-weight: bold;
-		margin-top: 22px;
-		letter-spacing: 2px;
+		margin-top: 24px;
+		margin-bottom: 7px;
+		font-size: 19px;
 		padding-bottom: 5px;
+		letter-spacing: 2px;
 	}
 	.full-desc h5 > i{
 		position: relative;
-		top:-64px;
-		height: 0;
-		font-size: 21px;
-		opacity: 0.5;
-	}
-	.top-side > span > span {
-		margin-left: 3px;
-		font-family: JosefinSans-Regular;
-		margin-top: -1px;
-	}
-	.top-side > span {
-		position: absolute;
-		top:-4px;
-		left:8.5px;
+		top:-36px;
+		left: -26.9%;
+		color: #fff;
+		height: 0;		
 		font-size: 15px;
-		color: #000;
-		letter-spacing: 2px;
-		display: -webkit-flex;
-		display: -moz-flex;
-		display: -ms-flex;
-		display: -o-flex;
-		display: flex;
-	}
-	.top-side > span > i {
-		color: #000;
-		margin-top: 3px;
-		margin-left: 13px;
-		font-size: 14px;
-	}	
+		opacity: 0.6;
+	}		
 	.title {
 		width: 60%;
 		margin: 0 auto;
@@ -166,7 +182,7 @@
 	}
 	.active {
 		box-shadow: none;
-		background: #f6f6f6;		
+		background: #ffffff;
 	}
 	.active a {
 		color: #000;
@@ -176,7 +192,7 @@
 		text-transform: uppercase;
 	}
 	ul li a {
-		padding-top: 5.5%;
+		padding-top: 14%;
 		text-transform: uppercase;
 		font-family: AlegreyaSans-Regular;
 		font-size: 1.4rem;
@@ -184,9 +200,9 @@
 		letter-spacing: 2px;
 	}
 	ul li {
-		background: #c5c5c5;
+		background: #bebebe;
 		box-shadow: 0 0 2px inset #fff;
-		/*opacity: .8;*/
+		height: 25%;
 	}
 	ul li:hover {
 		box-shadow:none;
@@ -208,19 +224,19 @@
 		min-height: inherit;	
 	}
 	.nav-wrapper{
-		box-shadow: -1px 1px 5px #737373;
 		padding: 0;
 		position: relative;
-		background: #c5c5c5;
-		min-height: inherit;		
+		background: #b9baba;
+		min-height: 646px;
 	}
 	main {
 		min-height: inherit;
 	}
 	#nav-mobile {
 		position: absolute;
-		height: 63%;
+		height: 92%;
 		width: 100%;
+		top: 53px;
 		border-bottom: 1px solid #fff;
 		display: -webkit-flex;
 		display: -moz-flex;
@@ -228,10 +244,7 @@
 		display: -o-flex;
 		display: flex;
 		flex-direction: column;
-	}
-	#nav-mobile li {
-		height: 24%;
-	}
+	}	
 	.root {
 		min-height: 100vh;
 	}
@@ -242,7 +255,21 @@
 		.full-desc span {
 			font-size: 17px;
 		}
-	}	
+	}
+	@keyframes hidder {
+		0%{
+			-webkit-transform: scale(1,1);
+			-ms-transform: scale(1,1);
+			-o-transform: scale(1,1);
+			transform: scale(1,1);
+		}
+		100% {
+			-webkit-transform: scale(1.1,1.1);
+			-ms-transform: scale(1.1,1.1);
+			-o-transform: scale(1.1,1.1);
+			transform: scale(1.1,1.1);
+		}	
+	}
 </style>
 <script>
 export default {
@@ -260,23 +287,27 @@ export default {
   	hide(e){
   		if(parseInt($('#nav-mobile').css('top')) > 200){
   			$('#nav-mobile').animate({
-	  			top: '-=207'
-	  		})
-		  	$('#nav-mobile li').animate({height:'148px'},'ease')
-		  	$('#nav-mobile li a').animate({paddingTop:'15%'},'ease')
+	  			top: '-=206'
+	  		},function(){
+	  			$('.top-wrapper').css('borderBottom','.6px solid rgba(58,58,58,0.01)')
+	  		})	  		
+		  	$('#nav-mobile').animate({height:'602px'},'ease')
+		  	$('#nav-mobile li a').animate({paddingTop:'14%'},'ease')
   		}  		
   	},
-  	show(e){  		
-  		if(parseInt($('#nav-mobile').css('top')) < 260){
-  			$('#nav-mobile li').animate({height:'97px'})
-  			$('#nav-mobile li a').animate({paddingTop:'5.5%'},'ease')
+  	show(e){
+  		if(parseInt($('#nav-mobile').css('top')) < 200){
   			$('#nav-mobile').animate({
-	  			top: '+=207'
+	  			top: '+=205'
+	  		},700,'linear',function(){
+	  			$('#nav-mobile').animate({height:'394px'})
+	  			$('#nav-mobile li a').animate({paddingTop:'5.5%'})
 	  		})
   		}  		
   	}
   },
   mounted(){
+  	setTimeout(() => {this.show()},2000)
   	$(document).ready(function(){
 	    $('.m-toggle').click(function(){
 	    	if($('#nav-mobile').css('opacity') == 0) {

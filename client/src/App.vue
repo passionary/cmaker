@@ -26,7 +26,11 @@
 }
 @font-face {
   font-family: 'AlegreyaSans-Thin';
-  src: url(/fonts/alegra/AlegreyaSans-Thin.ttf);
+  src: url(/fonts/monserat/Montserrat-ExtraLight.ttf);
+}
+@font-face {
+  font-family: 'LibreBaskerville-Regular';
+  src: url(/fonts/basker/LibreBaskerville-Regular.ttf);
 }
 .material-icons {
   font-family: 'Material Icons';
