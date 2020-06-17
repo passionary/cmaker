@@ -74,7 +74,7 @@
 		display: flex;
 	}	
 	.top-side > span > span {
-		font-family: AlegreyaSans-Thin;;
+		font-family: AlegreyaSans-Thin;
 		margin-top: -1px;
 		margin-left: 23px;
 		font-size: 13px;
@@ -124,7 +124,7 @@
 		text-decoration: underline;
 	}
 	.top-wrapper {
-		position: relative;
+		position: relative;		
 		display: -webkit-flex;
 		display: -moz-flex;
 		display: -ms-flex;
@@ -180,6 +180,7 @@
 		border-bottom: 1px solid #000;
 	}
 	.active {
+		border-top: 1px solid rgba(0,0,0,0.1);
 		box-shadow: none;
 		background: #ffffff;
 	}
@@ -226,7 +227,7 @@
 		padding: 0;
 		position: relative;
 		background: #b9baba;
-		min-height: 646px;
+		min-height: 660px;
 	}
 	main {
 		min-height: inherit;
@@ -246,6 +247,9 @@
 	}	
 	.root {
 		min-height: 100vh;
+	}
+	.row {
+		margin-bottom: 0;
 	}
 	.brand-logo {
 		margin-left: 5rem;
@@ -299,7 +303,7 @@ export default {
   			$('#nav-mobile').animate({
 	  			top: '+=171'
 	  		},700,'linear',function(){
-	  			$('#nav-mobile').animate({height:'425px'})
+	  			$('#nav-mobile').animate({height:'439px'})
 	  			$('#nav-mobile li a').animate({paddingTop:'5.5%'})
 	  		})
   		}  		
