@@ -74,13 +74,13 @@
 		display: flex;
 	}	
 	.top-side > span > span {
-		font-family: LibreBaskerville-Regular;
+		font-family: AlegreyaSans-Thin;;
 		margin-top: -1px;
 		margin-left: 23px;
 		font-size: 13px;
 	}
 	.top-side > span b {
-		color: #c0c0c0;
+		color: #000;
 		margin-right: 1px;
 	}
 	.desc {
@@ -93,20 +93,20 @@
 	.hiddler {
 		position: absolute;
 		animation:hidder 1s ease infinite alternate;
-		bottom:6%;
+		bottom:2.4%;
 		opacity: 0.8;
-		right:31px;
-		color: #79e3a4;
+		right:24px;
+		color: #fff;
 		font-size: 30px;
 	}	
 	.desc > span {
 		position: absolute;
 		top:-6px;
 		margin: 0;
-		font-family: TitilliumWeb-LightItalic;
-		letter-spacing: -.2px;
+		font-family: AlegreyaSans-Thin;
+		letter-spacing: .4px;
 		color: #000;
-		font-size: 17px;
+		font-size: 13px;
 		left:6.4%;
 	}
 	.desc i {		
@@ -137,7 +137,7 @@
 		position: relative;
 		font-family: AlegreyaSans-Thin;
 		cursor: pointer;
-		padding: 0 32px 0 30px;
+		padding: 0 22px 0 28px;
 		height: 176.5px;
 		overflow: hidden;
 		line-height: 1.5;
