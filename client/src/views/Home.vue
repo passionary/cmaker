@@ -93,12 +93,11 @@
 	.hiddler {
 		position: absolute;
 		animation:hidder 1s ease infinite alternate;
-		bottom:-.5%;
+		bottom:6%;
 		opacity: 0.8;
-		right:13px;
+		right:31px;
 		color: #79e3a4;
 		font-size: 30px;
-		cursor:pointer;
 	}	
 	.desc > span {
 		position: absolute;
@@ -129,7 +128,7 @@
 		display: -webkit-flex;
 		display: -moz-flex;
 		display: -ms-flex;
-		height: 53px;
+		height: 54px;
 		display: -o-flex;
 		display: flex;		
 		justify-content: space-between;
@@ -138,14 +137,13 @@
 		position: relative;
 		font-family: AlegreyaSans-Thin;
 		cursor: pointer;
-		border-top: .5px solid rgba(58,58,58,0.2);
-		padding: 0 20px 0 32px;
-		height: 203.5px;
+		padding: 0 32px 0 30px;
+		height: 176.5px;
 		overflow: hidden;
 		line-height: 1.5;
 	}
 	.full-desc span {
-		font-size: 17px;		
+		font-size: 16px;		
 		overflow: hidden;
 		color: #fff;
 		text-overflow: hidden;
@@ -157,16 +155,17 @@
 	.full-desc h5 {
 		color: #fff;		
 		position: relative;
-		margin-top: 24px;
-		margin-bottom: 7px;
-		font-size: 19px;
+		margin-top:19px;
+		text-transform: uppercase;
+		margin-bottom: 14px;
+		font-size: 16px;
 		padding-bottom: 5px;
 		letter-spacing: 2px;
 	}
 	.full-desc h5 > i{
 		position: relative;
-		top:-36px;
-		left: -26.9%;
+		top:-18px;
+		left: -1%;
 		color: #fff;
 		height: 0;		
 		font-size: 15px;
@@ -234,7 +233,7 @@
 	}
 	#nav-mobile {
 		position: absolute;
-		height: 92%;
+		height: 92.2%;
 		width: 100%;
 		top: 53px;
 		border-bottom: 1px solid #fff;
@@ -287,20 +286,20 @@ export default {
   	hide(e){
   		if(parseInt($('#nav-mobile').css('top')) > 200){
   			$('#nav-mobile').animate({
-	  			top: '-=206'
+	  			top: '-=171'
 	  		},function(){
 	  			$('.top-wrapper').css('borderBottom','.6px solid rgba(58,58,58,0.01)')
 	  		})	  		
-		  	$('#nav-mobile').animate({height:'602px'},'ease')
+		  	$('#nav-mobile').animate({height:'92.2%'},'ease')
 		  	$('#nav-mobile li a').animate({paddingTop:'14%'},'ease')
   		}  		
   	},
   	show(e){
   		if(parseInt($('#nav-mobile').css('top')) < 200){
   			$('#nav-mobile').animate({
-	  			top: '+=205'
+	  			top: '+=171'
 	  		},700,'linear',function(){
-	  			$('#nav-mobile').animate({height:'394px'})
+	  			$('#nav-mobile').animate({height:'425px'})
 	  			$('#nav-mobile li a').animate({paddingTop:'5.5%'})
 	  		})
   		}  		
