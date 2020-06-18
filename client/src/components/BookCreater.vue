@@ -1,49 +1,63 @@
 <template>
   <div class="books" ref="books">
-  	<button class="save btn btn-primary my-2" @click="show">save</button>
-  	<div class="alert alert-danger" v-if="error">
+  	<button class="save btn cyan" @click="show">save</button>
+  	<div class="materialize-red lighten-3" v-if="error">
   		<p>{{error}}</p>
   	</div>
-  	<input type="text" class="form-control w-50 mx-auto my-3" placeholder="book-name" v-model="name">
+    <div class="input-field">
+      <input id="name" type="text" class="validate" placeholder="Book name" v-model="name">
+    </div>  	
   	<div class="articles d-flex justify-content-between flex-wrap">
-  		<div class="form-group article d-flex justify-content-between flex-wrap" v-for="list in lists" ref="article" :key="list.page">
-	    	<input type="text" :name="list.page" placeholder="title" @change="save($event)">
-	    	<textarea :name="list.page" id="" cols="30" rows="10" class="form-control h-75" placeholder="description" @change="save($event)"></textarea>   
-	    </div>
-  	</div>    
-    <button class="adder btn btn-success" @click="addPages">add pages</button>
+  		<div class="article" v-for="list in lists" ref="article" :key="list.page">
+        <div class="input-field">
+          <textarea id="first" class="materialize-textarea" :name="list.page" placeholder="left page" @change="save($event)"></textarea>
+        </div>
+        <div class="input-field">
+          <textarea id="second" class="materialize-textarea" :name="list.page" placeholder="right page" @change="save($event)"></textarea>
+        </div>
+	    </div>      
+  	</div>
+    <button class="adder btn cyan" @click="addPages">add pages</button>
   </div>
 </template>
 
 <style scoped>
 	.adder{
-		position: fixed;		
-		bottom:4%;
-		right: 2%;
+    position: relative;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    left:80%;
 	}
+  .input-field {
+    width: 89%;
+    margin: 0 auto;
+  }
 	.articles{
 		width: 80%;
+    border-top: 1px solid rgba(0,0,0,0.4);
 		margin: 0 auto;
+    position: relative;
+    margin-top: 50px;
 	}
 	.article{
 		opacity: 0;
 		transition: opacity 1.5s ease;
-		width: 27%;
-		height:240px;
+		width: 100%;
+    margin-top: 10%;
+    min-height: 200px;
+    border-bottom: 1px solid rgba(0,0,0,0.4);
 	}
 	.appearing{
 		opacity: 1;
 	}
-	.form-group{
-		border: 1px solid #000;		
-	}
 	.save{
 		position: relative;
-		left: 84%;
+		left: 85.7%;
+    top:20px;
 		letter-spacing: 3px;
 		text-transform: uppercase;
 		font-size: 14px;
-		width: 100px;
+		width: 88px;
 	}
 </style>
 
@@ -65,23 +79,10 @@ export default {
   		this.lists.push({page:++this.lastIndex})  	
   		setTimeout(() => {
   			this.$refs.article[this.$refs.article.length - 1].classList.add('appearing')
-  		},100)	  		
-  		let bottom = document.documentElement.scrollHeight - document.documentElement.scrollHeight >= 1200 ? 1000 : 400;  		  		
-  		if (!this.lev) {
-  			let timer = setInterval(() => {  			
-	  			if (bottom >= document.documentElement.scrollHeight - 600) {	  				
-	  				clearTimeout(timer);
-	  				this.lev = false;
-	  				return;
-	  			}
-	  			this.lev = true;
-	  			bottom+=16;
-	  			window.scrollTo(0,bottom)
-	  		},1000/60)
-  		}  				  	
+  		},100)  		
   	},	
   	save(event){
-  	 	let key = event.target.placeholder == 'description' ? '2' : '1';  	 	
+  	 	let key = event.target.placeholder == 'left page' ? '1' : '2';
   		this.bookData[+event.target.name - 1].set(key,{cont:event.target.value,page:event.target.name});  		 	
   	},
   	show(){  		  		  	  			  	
@@ -97,7 +98,7 @@ export default {
 	    }
   	}
   },
-  mounted(){  	
+  mounted(){    
    	this.bookFuller();
   }
 }

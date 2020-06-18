@@ -7,42 +7,44 @@
 				</div>
 	  		<router-view />
   		</main>
-  		<nav class="nav-wrapper col s3">
-  			<div class="top-wrapper">
-  				<span class="top-side">
+  		<div class="nav-container col s3">
+	  		<nav class="nav-wrapper">
+	  			<div class="top-wrapper">
+	  				<span class="top-side">
+		  				<span>
+		  					<span><b>C</b>maker</span>
+		  				</span>  				
+		  			</span>
+		  			<div class="desc" @click="show($event)">
+		  				<span>app for content making</span>
+		  				<i class="material-icons">info_outline</i>
+		  			</div>	  			
+	  			</div>  			
+	  			<div class="full-desc" @click="hide($event)">
+	  				<span class="">
+							<i class="material-icons hiddler">
+								done
+							</i> 						
+						</span>
+	  				<h5 class="center-align">  					
+	  					Description
+	  					<i class="material-icons">terrain</i>
+	  				</h5>
 	  				<span>
-	  					<span><b>C</b>maker</span>
-	  				</span>  				
-	  			</span>
-	  			<div class="desc" @click="show($event)">
-	  				<span>app for content making</span>
-	  				<i class="material-icons">info_outline</i>
-	  			</div>	  			
-  			</div>  			
-  			<div class="full-desc" @click="hide($event)">
-  				<span class="">
-						<i class="material-icons hiddler">
-							done
-						</i> 						
-					</span>
-  				<h5 class="center-align">  					
-  					Description
-  					<i class="material-icons">terrain</i>
-  				</h5>
-  				<span>
-						This is a application for content making.
-						What a content you want make?
-						That may be: <span>books,</span> <span>articles</span> and <span>video</span>.						
-  				</span>
-  			</div>  			
-  			<ul id="nav-mobile" class="center">
-  				<li v-for="item in navItems" :class="{'active':item.path == $route.path}">
-  					<router-link tag="a" :to="item.path">
-	  					{{item.name}}
-	  				</router-link>
-  				</li>
-  			</ul>  			
-  		</nav>
+							This is a application for content making.
+							What a content you want make?
+							It may be: <span>books,</span> <span>articles</span> and <span>video</span>.						
+	  				</span>
+	  			</div>  			
+	  			<ul id="nav-mobile" class="center">
+	  				<li v-for="item in navItems" :class="{'active':item.path == $route.path}">
+	  					<router-link tag="a" :to="item.path">
+		  					{{item.name}}
+		  				</router-link>
+	  				</li>
+	  			</ul>  			
+	  		</nav>
+  		</div>
 		</div>  	
   </div>	
 </template>
@@ -89,16 +91,11 @@
 		background: #eeeeee;
 		cursor: pointer;
 		position: relative;
-	}
-	.hiddler {
-		position: absolute;
-		animation:hidder 1s ease infinite alternate;
-		bottom:2.4%;
-		opacity: 0.8;
-		right:24px;
-		color: #fff;
-		font-size: 30px;
 	}	
+	.nav-container {
+		position: fixed;
+		right: 0 !important;
+	}
 	.desc > span {
 		position: absolute;
 		top:-6px;
@@ -128,22 +125,25 @@
 		display: -webkit-flex;
 		display: -moz-flex;
 		display: -ms-flex;
-		height: 54px;
 		display: -o-flex;
-		display: flex;		
+		display: flex;
+		display: none;
+		height: 54px;			
 		justify-content: space-between;
 	}
 	.full-desc {
 		position: relative;
+		border-bottom: 1px solid rgba(123,125,125,1);
+		border-top: 1px solid rgba(255,255,255,0.6);
 		font-family: AlegreyaSans-Thin;
 		cursor: pointer;
-		padding: 0 22px 0 28px;
-		height: 176.5px;
+		padding: 0 15px 0 24px;
+		height: 192px;
 		overflow: hidden;
 		line-height: 1.5;
 	}
 	.full-desc span {
-		font-size: 16px;		
+		font-size: 17px;		
 		overflow: hidden;
 		color: #fff;
 		text-overflow: hidden;
@@ -155,17 +155,26 @@
 	.full-desc h5 {
 		color: #fff;		
 		position: relative;
-		margin-top:19px;
-		text-transform: uppercase;
-		margin-bottom: 14px;
-		font-size: 16px;
+		margin-top:23px;
+		margin-bottom: 20px;
+		font-size: 18px;
+		font-weight: bold;
 		padding-bottom: 5px;
-		letter-spacing: 2px;
+		letter-spacing: 2.4px;
+	}
+	.hiddler {
+		position: absolute;
+		animation:hidder 1s ease infinite alternate;
+		bottom:0.4%;
+		opacity: 0.8;
+		right:18px;
+		color: #99e2e5;
+		font-size: 30px;
 	}
 	.full-desc h5 > i{
 		position: relative;
 		top:-18px;
-		left: -1%;
+		left: -1.8%;
 		color: #fff;
 		height: 0;		
 		font-size: 15px;
@@ -180,35 +189,54 @@
 		border-bottom: 1px solid #000;
 	}
 	.active {
-		border-top: 1px solid rgba(0,0,0,0.1);
-		box-shadow: none;
-		background: #ffffff;
+		border-top: 1px solid rgba(0,0,0,0.1) !important;
+		border-bottom: none !important;
+		background: #fff !important;
 	}
 	.active a {
 		color: #000;
 		opacity: 1;
 	}	
-	ul li a:hover {
+	#nav-mobile {
+		position: absolute;
+		height: 70.4%;
+		width: 100%;
+		top: 29.7%;
+		display: -webkit-flex;
+		display: -moz-flex;
+		display: -ms-flex;
+		display: -o-flex;
+		display: flex;
+		flex-direction: column;
+	}	
+	#nav-mobile li a:hover {
 		text-transform: uppercase;
 	}
-	ul li a {
-		padding-top: 14%;
+	#nav-mobile li a {
+		padding-top: 8%;
 		text-transform: uppercase;
 		font-family: AlegreyaSans-Regular;
 		font-size: 1.4rem;
 		height: 100%;
 		letter-spacing: 2px;
 	}
-	ul li {
-		background: #bebebe;
-		box-shadow: 0 0 2px inset #fff;
+	#nav-mobile li {
+		position: relative;
+		background: #a1a1a1;
+		border-bottom: 1px solid #7b7d7d;
+		border-top: 1px solid rgba(255,255,255,0.6);
 		height: 25%;
 	}
-	ul li:hover {
+	#nav-mobile li:hover {
 		box-shadow:none;
 	}
 	.row {
+		margin-bottom: 0;
+		position: relative;
 		min-height: inherit;
+	}
+	.col {
+		padding: 0;
 	}
 	.logo i{
 		font-size: 17px;
@@ -224,33 +252,18 @@
 		min-height: inherit;	
 	}
 	.nav-wrapper{
+		width: 100%;
 		padding: 0;
 		position: relative;
-		background: #b9baba;
-		min-height: 660px;
+		background: #a1a1a1;
+		min-height: 646px;
 	}
 	main {
 		min-height: inherit;
-	}
-	#nav-mobile {
-		position: absolute;
-		height: 92.2%;
-		width: 100%;
-		top: 53px;
-		border-bottom: 1px solid #fff;
-		display: -webkit-flex;
-		display: -moz-flex;
-		display: -ms-flex;
-		display: -o-flex;
-		display: flex;
-		flex-direction: column;
 	}	
 	.root {
 		min-height: 100vh;
-	}
-	.row {
-		margin-bottom: 0;
-	}
+	}	
 	.brand-logo {
 		margin-left: 5rem;
 	}	
@@ -288,29 +301,30 @@ export default {
   }),
   methods: {
   	hide(e){
-  		if(parseInt($('#nav-mobile').css('top')) > 200){
+  		$('.top-wrapper').css('display','flex')
+  		if(parseInt($('#nav-mobile').css('top')) > 190){
   			$('#nav-mobile').animate({
-	  			top: '-=171'
+	  			top: '-=139'
 	  		},function(){
 	  			$('.top-wrapper').css('borderBottom','.6px solid rgba(58,58,58,0.01)')
 	  		})	  		
-		  	$('#nav-mobile').animate({height:'92.2%'},'ease')
+		  	$('#nav-mobile').animate({height:'93%'},'ease')
 		  	$('#nav-mobile li a').animate({paddingTop:'14%'},'ease')
   		}  		
   	},
   	show(e){
   		if(parseInt($('#nav-mobile').css('top')) < 200){
+  			$('.top-wrapper').hide();
   			$('#nav-mobile').animate({
-	  			top: '+=171'
+	  			top: '+=139'
 	  		},700,'linear',function(){
-	  			$('#nav-mobile').animate({height:'439px'})
-	  			$('#nav-mobile li a').animate({paddingTop:'5.5%'})
+	  			$('#nav-mobile').animate({height:'464.5px'})
+	  			$('#nav-mobile li a').animate({paddingTop:'7.5%'})
 	  		})
   		}  		
   	}
   },
   mounted(){
-  	setTimeout(() => {this.show()},2000)
   	$(document).ready(function(){
 	    $('.m-toggle').click(function(){
 	    	if($('#nav-mobile').css('opacity') == 0) {

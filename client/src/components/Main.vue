@@ -38,9 +38,9 @@
     border-bottom: 1px solid rgba(0,0,0,0.1);
     font-size:32px;
     z-index: 100;
-    left:30px;
+    left:36px;
     padding-bottom: 4px;
-    top:16px;
+    top:24px;
     font-family: TitilliumWeb-LightItalic;
   }
   .title i {
@@ -73,14 +73,14 @@
   .video{
     padding-top: 6%;
     right:120px;
-    top:140px;
+    top:163px;
   }
   .video img {
     width: 39%;
   }
   .book {
-    left:390px;
-    top:40%;
+    left:399px;
+    top:208px;
     padding-top: 7.2%;
   }
   .book img {
@@ -89,7 +89,7 @@
   .wallpaper {
     padding-top: 6.5%;
     left:120px;
-    top:140px;
+    top:163px;
   }
   .wallpaper img {
     margin-left: -4px;
