@@ -51,7 +51,13 @@ const routes = [
       	name:'book',
       	component: () => import('../components/Book'),
         meta:{auth:true},
-    	}
+    	},
+      {
+        path: '/book/edit/:bk',     
+        name:'book-edit',
+        component: () => import('../components/BookCreater'),
+        meta:{auth:true},
+      }
     ],
   },
   {

@@ -1,33 +1,19 @@
 <template>
-  <div class="books h-75">
-    <h3 class="text-center mt-3">Content</h3>
-    <div class="mx-auto mt-5 d-flex justify-content-around flex-wrap" v-if="books">
-      <div class="child mt-3" v-for="(el,index) in books" :key="index">        
-      <p class="title text-center"><a href="" @click.prevent="$router.push({name:'book',params:{bk:el.content}})">{{el.name}}</a></p>
+  <div class="videos h-75">
+    <h3 class="center-align">Content</h3>
+    <div class="" v-if="videos">
+      <div class="" v-for="(el,index) in videos" :key="index">        
+        <video :src="'http://127.0.0.1:8000/storage/' + el.content" controls=""></video>
       </div>
     </div>
-    <h1 v-else class="text-center">No content</h1>    
-    <!-- <button class="btn btn-primary ml-4 toggler" @click="addClass">next</button>
-    <button class="btn btn-primary ml-4 toggler2" @click="backClass">back</button> -->
+    <h1 v-else class="text-center">No content</h1>  
   </div>
 </template>
 
 <style scoped>  
-  .books{
+  .videos{
     position: relative;
-  }    
-  .title{
-    margin-top: 62%;
-  }
-  .child{
-    background: #e3cc9e;
-    padding: 10px 20px;
-    left:296px;    
-    width: 300px;
-    height: 390px;    
-    top:5px;
-    box-shadow:0 0 4px inset #000;
-  }
+  }  
 </style>
 
 <script>
@@ -36,15 +22,22 @@ export default {
   data: () => ({
     content: '',
     index:0,
-    books:[],
+    videos:[],
     offset:0,
     pages:[]
   }),   
     
   mounted(){        
     for(let i=0;i<Object.keys(localStorage).length;i++){
-      if (Object.keys(localStorage)[i] != 'loglevel:webpack-dev-server')      
-      this.books.push({name:Object.keys(localStorage)[i],content:JSON.parse(localStorage.getItem(Object.keys(localStorage)[i]))})
+      if (Object.keys(localStorage)[i] != 'loglevel:webpack-dev-server'){
+        const keys = Object.keys(localStorage)[i].split(',')
+        const vals = keys.map(e => e.split('='))
+        if(vals[0][1] == 'video')
+        this.videos.push({
+          name:vals[1][1],
+          content:localStorage.getItem(Object.keys(localStorage)[i])
+        })
+      }
     }       
   }
 }

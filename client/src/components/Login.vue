@@ -40,7 +40,7 @@
 				axios.post('http://127.0.0.1:8000/api/login',log)
 				.then(res => {
 					console.log(res)
-					document.cookie = `token=${res.data.token}; max-age=420`
+					document.cookie = `token=${res.data.token}`
 					this.$router.push('/')
 				})
 			}

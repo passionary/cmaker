@@ -5,15 +5,16 @@
   		<p class="center-align white-text">{{message}}</p>
   	</div>
     <div class="input-field">
-      <input id="name" type="text" class="validate" placeholder="Book name" v-model="name">
+      <input id="name" :value="$route.params.bk.n" type="text" class="validate" placeholder="Book name" v-if="$route.params.bk.n">
+      <input id="name" type="text" class="validate" placeholder="Book name" v-model="name" v-else="$route.params.bk.n">
     </div>  	
   	<div class="articles d-flex justify-content-between flex-wrap">
-  		<div class="article" v-for="list in lists" ref="article" :key="list.page">
+  		<div class="article" v-for="list in lists" ref="article">
         <div class="input-field">
-          <textarea id="first" class="materialize-textarea" :name="list.page" placeholder="left page" @change="save($event)"></textarea>
+          <textarea id="first" class="materialize-textarea" :name="list.get && list.get('1') && list.get('1').page ? list.get('1').page : list.page" placeholder="left page" @change="save($event)" :value="list.get && list.get('1') ? list.get('1').cont : ''"></textarea>
         </div>
         <div class="input-field">
-          <textarea id="second" class="materialize-textarea" :name="list.page" placeholder="right page" @change="save($event)"></textarea>
+          <textarea id="second" class="materialize-textarea" :name="list.get && list.get('1') && list.get('1').page ? list.get('1').page : list.page" placeholder="right page" @change="save($event)" :value="list.get && list.get('2') ? list.get('2').cont : ''"></textarea>
         </div>
 	    </div>      
   	</div>
@@ -83,13 +84,13 @@ export default {
   	},	
   	save(event){
   	 	let key = event.target.placeholder == 'left page' ? '1' : '2';
-  		this.bookData[+event.target.name - 1].set(key,{cont:event.target.value,page:event.target.name});  		 	
+  		this.bookData[+event.target.name - 1].set(key,{cont:event.target.value,page:event.target.name});
   	},
   	show(){  		  		  	  			  	
   		this.bookData.forEach((item,i) => {
   			this.sendData.push(Object.fromEntries(item.entries()))
   		})
-  		localStorage.setItem(this.name,JSON.stringify(this.sendData))
+      localStorage.setItem(`type=book,name=${this.name}`,JSON.stringify(this.sendData))
       if(this.sendData.length)
       this.message = 'your book saved'
   	},
@@ -100,8 +101,20 @@ export default {
 	    }
   	}
   },
-  mounted(){    
-   	this.bookFuller();
+  mounted(){
+    if(this.$route.params.bk) {
+      this.name = this.$route.params.bk.n;
+      this.bookData = this.$route.params.bk.c.map((e,i) => {
+        this.$refs.article[i].classList.add('appearing');
+        const map = new Map()
+        map.set('1',e['1'])
+        map.set('2',e['2'])
+        return map
+      })
+      console.log(this.bookData)
+      this.lists = this.bookData
+    }
+   	else this.bookFuller();
   }
 }
 </script>

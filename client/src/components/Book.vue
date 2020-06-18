@@ -1,5 +1,6 @@
 <template>
-  <div class="bb-custom-wrapper">    
+  <div class="bb-custom-wrapper">
+    <router-link :to="{name:'book-edit',params:{bk:$route.params.bk}}">edit book</router-link>
   	<h3 class="text-center mt-3">Content</h3>
     <div class="bb-bookblock mx-auto mt-5" v-if="books.length" id="bb-bookblock">
       <div class="bb-item" v-for="(el,index) in books" :style="{backgroundColor:el.name,zIndex:Math.abs(index - books.length)}" :ref="index" :key="index">        
@@ -66,7 +67,7 @@ export default {
   }),  
   methods:{
     initialize(){
-      this.books = this.$route.params.bk;
+      this.books = this.$route.params.bk.c;
     },
     bookblock(){
       var Page = (function() {
