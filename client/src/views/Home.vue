@@ -167,9 +167,9 @@
 		animation:hidder 1s ease infinite alternate;
 		bottom:0.4%;
 		opacity: 0.8;
-		right:18px;
+		right:20px;
 		color: #99e2e5;
-		font-size: 30px;
+		font-size: 28px;
 	}
 	.full-desc h5 > i{
 		position: relative;
@@ -288,6 +288,8 @@
 	}
 </style>
 <script>
+import $ from 'jquery'
+
 export default {
   name: 'home',
   data:() => ({
@@ -313,7 +315,7 @@ export default {
   		}  		
   	},
   	show(e){
-  		if(parseInt($('#nav-mobile').css('top')) < 200){
+  		if(parseInt($('#nav-mobile').css('top')) < 1000){
   			$('.top-wrapper').hide();
   			$('#nav-mobile').animate({
 	  			top: '+=139'

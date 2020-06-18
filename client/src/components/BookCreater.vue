@@ -1,8 +1,8 @@
 <template>
   <div class="books" ref="books">
   	<button class="save btn cyan" @click="show">save</button>
-  	<div class="materialize-red lighten-3" v-if="error">
-  		<p>{{error}}</p>
+  	<div class="green lighten-3" v-if="message">
+  		<p class="center-align white-text">{{message}}</p>
   	</div>
     <div class="input-field">
       <input id="name" type="text" class="validate" placeholder="Book name" v-model="name">
@@ -69,7 +69,7 @@ export default {
   	bookData:[],
   	lastIndex:3,
   	sendData:[],
-  	error:'',
+  	message:'',
   	lev:false,
   	name:''  	  	
   }),  
@@ -88,8 +88,10 @@ export default {
   	show(){  		  		  	  			  	
   		this.bookData.forEach((item,i) => {
   			this.sendData.push(Object.fromEntries(item.entries()))
-  		})	  		
-  		localStorage.setItem(this.name,JSON.stringify(this.sendData))	  	
+  		})
+  		localStorage.setItem(this.name,JSON.stringify(this.sendData))
+      if(this.sendData.length)
+      this.message = 'your book saved'
   	},
   	bookFuller(){
   		for(let i=0;i<this.lists.length;i++){
