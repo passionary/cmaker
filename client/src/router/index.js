@@ -14,6 +14,7 @@ const routes = [
     children:[
       {
         path: '/',
+        name:'base',
         component: () => import('../components/Main'),
         meta:{auth:true},
       },
@@ -58,6 +59,12 @@ const routes = [
         name:'book-edit',
         component: () => import('../components/BookCreater'),
         meta:{auth:true},
+      },
+      {
+        path: '/article/edit/:art',
+        name:'article-edit',
+        component: () => import('../components/ArticleCreater'),
+        meta:{auth:true},
       }
     ],
   },
@@ -94,7 +101,7 @@ const router = new VueRouter({
 })
 const reducedRoutes = routes.reduce((p,i) => 
   i.children ? 
-    p.concat([{path:i.path},...i.children])
+    p.concat([{name:i.name},...i.children])
   : p.concat(i.path !== '/error' && i)
 ,[]).filter(e => !!e)
 router.beforeEach(async (to, from, next) => {  
@@ -104,11 +111,11 @@ router.beforeEach(async (to, from, next) => {
   } catch (e) {
     console.log('errors with server connection')
   }
-  if(request === undefined && reducedRoutes.findIndex(e => e.path === to.path) !== -1)
+  if(request === undefined && reducedRoutes.findIndex(e => e.name === to.name) !== -1)
     next('/error')
   else if(to.meta.auth && request.data.token === false) next('/login')
   else {
-    if(request !== undefined && !to.meta.error && reducedRoutes.findIndex(e => e.path === to.path) !== -1) next()
+    if(request !== undefined && !to.meta.error && reducedRoutes.findIndex(e => e.name === to.name) !== -1) next()
     else if(request === undefined) next()
     else console.log('no route')
   }

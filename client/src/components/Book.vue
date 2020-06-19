@@ -5,13 +5,13 @@
     <div class="bb-bookblock mx-auto mt-5" v-if="books.length" id="bb-bookblock">
       <div class="bb-item" v-for="(el,index) in books" :style="{backgroundColor:el.name,zIndex:Math.abs(index - books.length)}" :ref="index" :key="index">        
         <p class="content left-content">
-          {{el['1'] ? el['1'].cont : ''}}
+          {{el[0] ? el[0].cont : ''}}
         </p>
-        <p class="page">{{el['1'] ? el['1'].page : ''}}</p>
+        <p class="page">{{el[0] ? el[0].page : ''}}</p>
         <p class="content right-content">
-          {{el['2'] ? el['2'].cont : ''}}
+          {{el[1] ? el[1].cont : ''}}
         </p>
-        <p class="page2">{{el['2'] ? el['2'].page : ''}}</p>
+        <p class="page2">{{el[1] ? el[1].page : ''}}</p>
       </div>
     </div>
     <h1 v-else class="text-center">No content</h1>      
@@ -68,6 +68,7 @@ export default {
   methods:{
     initialize(){
       this.books = this.$route.params.bk.c;
+      console.log(this.books)
     },
     bookblock(){
       var Page = (function() {

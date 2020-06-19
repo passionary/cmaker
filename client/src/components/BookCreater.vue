@@ -5,16 +5,18 @@
   		<p class="center-align white-text">{{message}}</p>
   	</div>
     <div class="input-field">
-      <input id="name" :value="$route.params.bk.n" type="text" class="validate" placeholder="Book name" v-if="$route.params.bk.n">
-      <input id="name" type="text" class="validate" placeholder="Book name" v-model="name" v-else="$route.params.bk.n">
+      <input id="name" :value="$route.params.bk.n" type="text" class="validate" placeholder="Book name" v-if="$route.params.bk && $route.params.bk.n">
+      <input type="text" id="name" class="validate" placeholder="Book name" v-else>
     </div>  	
   	<div class="articles d-flex justify-content-between flex-wrap">
-  		<div class="article" v-for="list in lists" ref="article">
+  		<div class="article" v-for="(list,index) in bookData" ref="article">
         <div class="input-field">
-          <textarea id="first" class="materialize-textarea" :name="list.get && list.get('1') && list.get('1').page ? list.get('1').page : list.page" placeholder="left page" @change="save($event)" :value="list.get && list.get('1') ? list.get('1').cont : ''"></textarea>
+          <textarea v-if="$route.params.bk && $route.params.bk.c" id="first" class="materialize-textarea" :name="index" placeholder="left page" @change="save($event)" :value="list.get && list.get('0') ? list.get('0').cont : ''"></textarea>
+          <textarea id="first" class="materialize-textarea" :name="index" placeholder="left page" @change="save($event)" v-else></textarea>
         </div>
         <div class="input-field">
-          <textarea id="second" class="materialize-textarea" :name="list.get && list.get('1') && list.get('1').page ? list.get('1').page : list.page" placeholder="right page" @change="save($event)" :value="list.get && list.get('2') ? list.get('2').cont : ''"></textarea>
+          <textarea v-if="$route.params.bk && $route.params.bk.c" id="second" class="materialize-textarea" :name="index" placeholder="right page" @change="save($event)" :value="list.get && list.get('1') ? list.get('1').cont : ''"></textarea>
+          <textarea id="second" class="materialize-textarea" :name="index" placeholder="right page" @change="save($event)" v-else></textarea>
         </div>
 	    </div>      
   	</div>
@@ -66,7 +68,6 @@
 export default {
   name: 'HelloWorld',
   data:() => ({
-  	lists:[{page:1},{page:2},{page:3}],  	
   	bookData:[],
   	lastIndex:3,
   	sendData:[],
@@ -76,45 +77,48 @@ export default {
   }),  
   methods:{ 
   	addPages(){
-  		this.bookData.push(new Map())
-  		this.lists.push({page:++this.lastIndex})  	
+      this.bookData.push(new Map())
   		setTimeout(() => {
   			this.$refs.article[this.$refs.article.length - 1].classList.add('appearing')
-  		},100)  		
-  	},	
-  	save(event){
-  	 	let key = event.target.placeholder == 'left page' ? '1' : '2';
-  		this.bookData[+event.target.name - 1].set(key,{cont:event.target.value,page:event.target.name});
+  		},100)
+  	},
+  	save(event){      
+  	 	let key = event.target.placeholder == 'left page' ? 0 : 1;
+      let page
+      page = key === 0 ? +event.target.name + (+event.target.name + 1)
+      : +event.target.name + (+event.target.name + 2)
+  		this.bookData[+event.target.name].set(key,{cont:event.target.value,page});
   	},
   	show(){  		  		  	  			  	
   		this.bookData.forEach((item,i) => {
   			this.sendData.push(Object.fromEntries(item.entries()))
   		})
-      localStorage.setItem(`type=book,name=${this.name}`,JSON.stringify(this.sendData))
+      localStorage.setItem(`type=book,name=${document.querySelector('#name').value}`,JSON.stringify(this.sendData))
       if(this.sendData.length)
       this.message = 'your book saved'
   	},
   	bookFuller(){
-  		for(let i=0;i<this.lists.length;i++){
+  		for(let i=0;i<3;i++){
 	    	this.bookData.push(new Map());
-	    	this.$refs.article[i].classList.add('appearing');
 	    }
   	}
   },
   mounted(){
     if(this.$route.params.bk) {
       this.name = this.$route.params.bk.n;
-      this.bookData = this.$route.params.bk.c.map((e,i) => {
-        this.$refs.article[i].classList.add('appearing');
-        const map = new Map()
-        map.set('1',e['1'])
-        map.set('2',e['2'])
-        return map
-      })
-      console.log(this.bookData)
-      this.lists = this.bookData
+      this.bookData = this.$route.params.bk.c.map((e,i) => new Map(
+        Object.entries(e))
+      )
+      setTimeout(() => {
+        this.$refs.article.forEach(e => e.classList.add('appearing'))
+      },100)
     }
-   	else this.bookFuller();
+   	else {
+      this.bookFuller();
+      setTimeout(() => {
+        this.$refs.article.forEach(e => e.classList.add('appearing'))
+      },100)
+    }
   }
 }
 </script>

@@ -1,9 +1,9 @@
 <template>
   <div class="books h-75">
     <h3 class="text-center mt-3">Content</h3>
-    <div class="mx-auto mt-5 d-flex justify-content-around flex-wrap" v-if="books">
-      <div class="child mt-3" v-for="(el,index) in books" :key="index">        
-      <p class="title text-center"><a href="" @click.prevent="$router.push({name:'book',params:{bk:el.content}})">{{el.name}}</a></p>
+    <div class="mx-auto mt-5 d-flex justify-content-around flex-wrap" v-if="articles">
+      <div class="child mt-3" v-for="(el,index) in articles" :key="index">        
+      <p class="title text-center"><a href="" @click.prevent="$router.push({name:'article-edit',params:{art:{n:el.name,c:el.content}}})">{{el.name}}</a></p>
       </div>
     </div>
     <h1 v-else class="text-center">No content</h1>    
@@ -34,15 +34,22 @@ export default {
   data: () => ({
     content: '',
     index:0,
-    books:[],
+    articles:[],
     offset:0,
     pages:[]
   }),   
     
   mounted(){        
     for(let i=0;i<Object.keys(localStorage).length;i++){
-      if (Object.keys(localStorage)[i] != 'loglevel:webpack-dev-server')      
-      this.books.push({name:Object.keys(localStorage)[i],content:JSON.parse(localStorage.getItem(Object.keys(localStorage)[i]))})
+      if (Object.keys(localStorage)[i] != 'loglevel:webpack-dev-server'){
+        const keys = Object.keys(localStorage)[i].split(',')
+        const vals = keys.map(e => e.split('='))
+        if(vals[0][1] == 'article')
+        this.articles.push({
+          name:vals[1][1],
+          content:localStorage.getItem(Object.keys(localStorage)[i])
+        })
+      }      
     }       
   }
 }
