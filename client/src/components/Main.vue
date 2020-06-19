@@ -6,12 +6,7 @@
         <div class="item" :class="obj.name">
           <img :src="obj.icon" alt="">
         </div>
-      </router-link>
-      <!-- <p class="center">
-        <router-link tag="a" :to="{path:obj.path}" class="">
-          {{obj.name}}
-        </router-link>
-      </p> -->
+      </router-link>      
     </div>
   </div>
 </template>
@@ -19,6 +14,7 @@
 <style scoped>
   .item img{
     width: 34%;
+    padding-top: 30.2%;
   }
   .i-back {
     margin-top: 9px;
@@ -71,24 +67,22 @@
     transform: scale(1.1,1.1);
   }
   .video{
-    padding-top: 6%;
-    right:120px;
+    right:11.84%;
     top:163px;
   }
   .video img {
     width: 39%;
   }
   .book {
-    left:399px;
+    left:39.4%;
     top:208px;
-    padding-top: 7.2%;
   }
   .book img {
+    padding-top: 34%;
     width: 31.5%;
   }
   .wallpaper {
-    padding-top: 6.5%;
-    left:120px;
+    left:11.84%;
     top:163px;
   }
   .wallpaper img {
@@ -98,6 +92,82 @@
     width: 100%;
     height: 646px;
     position: relative;
+  }
+  @media screen and (max-width: 1200px) {
+    .item {
+      width: 180px ;
+      height: 180px;
+    }    
+  }
+  @media screen and (max-width: 1100px) {
+    .item {
+      width: 155px ;
+      height: 155px;
+    }
+  }
+  @media screen and (max-width: 993px) {
+    .item {
+      width: 125px;
+      height: 125px;
+    }
+  }
+  @media screen and (max-width: 780px) {
+    .item {
+      position: static;
+      display: -webkit-flex;
+      display: -moz-flex;
+      display: -ms-flex;
+      display: -o-flex;
+      display: flex;
+      flex-direction: column;
+      margin: 0 auto;
+      margin-top: 20px;
+      width: 155px;
+      height: 155px;
+    }
+    .item img {
+      margin: 0 auto;
+    }
+    .title {
+      left:11.5%;
+      font-size: 32px;
+    }    
+    .center-block {
+      top:110px;
+      height: 100%;
+    }
+  }
+  @media screen and (max-width: 650px) {
+    .title {
+      font-size: 26px;
+      left:14%;
+    }
+  }
+  @media screen and (max-width: 550px) {
+    .item {
+      width: 130px;
+      height: 130px;
+      margin-top: 40px;
+    }    
+    .title {
+      left:10%;
+    }
+    .center-block {
+      top:90px;
+    }
+  }
+  @media screen and (max-width: 440px) {
+    .item {
+      width: 118px;
+      height: 118px;
+    }
+    .title {
+      font-size: 23px;
+      left:8.5%;
+    }
+    .center-block {
+      top:105px;
+    }    
   }
   @keyframes grower {
     from {

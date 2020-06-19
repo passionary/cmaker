@@ -109,7 +109,7 @@ router.beforeEach(async (to, from, next) => {
   try {
     request = await axios.get(`http://127.0.0.1:8000/api/token?token=${getCookie('token')}`)
   } catch (e) {
-    console.log('errors with server connection')
+    console.error('ERROR with server connection')
   }
   if(request === undefined && reducedRoutes.findIndex(e => e.name === to.name) !== -1)
     next('/error')
@@ -117,7 +117,7 @@ router.beforeEach(async (to, from, next) => {
   else {
     if(request !== undefined && !to.meta.error && reducedRoutes.findIndex(e => e.name === to.name) !== -1) next()
     else if(request === undefined) next()
-    else console.log('no route')
+    else console.warn('NO route')
   }
 })
 export default router

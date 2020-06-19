@@ -65,7 +65,7 @@
 	.top-side > span {
 		position: absolute;
 		top:-4px;
-		left:8.5px;
+		left:14%;
 		font-size: 15px;
 		color: #000;
 		letter-spacing: 2px;
@@ -267,11 +267,105 @@
 	.brand-logo {
 		margin-left: 5rem;
 	}	
-	@media screen and (max-width: 1125px) {
+	@media screen and (max-width: 1200px) {
 		.full-desc span {
-			font-size: 17px;
+			font-size: 15px;
+		}
+		.hiddler {
+			bottom:-4%;
 		}
 	}
+	@media screen and (max-width: 1090px) {
+		.full-desc span {
+			font-size: 14px;
+		}
+		.hiddler {
+			bottom:-4%;
+		}
+	}
+	@media screen and (max-width: 1000px) {
+		.full-desc h5 {
+			margin-top: 15px;
+			font-size: 16px;
+			margin-bottom: 10px;
+		}
+		.hiddler {
+			bottom:-4%;
+		}
+	}
+	@media screen and (max-width: 830px) {
+		.full-desc h5 {
+			margin-top: 15px;
+			font-size: 15px;
+			margin-bottom: 10px;
+		}
+		.hiddler {
+			bottom:-4%;
+		}
+	}
+	@media screen and (max-width: 784px) {
+		.full-desc {
+			display: none;
+		}
+		.top-wrapper {
+			display: -webkit-flex;
+			display: -moz-flex;
+			display: -ms-flex;
+			display: -o-flex;
+			display: flex;
+		}
+		.desc {
+			width: 30%;
+		}
+		.top-side {
+			width: 70%;
+		}
+		.top-side span {
+			left:10%;
+		}
+		.desc span {
+			display: none;		
+		}
+		.desc i {
+			right:30%;
+		}
+		#nav-mobile {
+			height: 92%;
+			top:54px;
+		}
+		#nav-mobile li a{
+			padding-top: 22.5%;
+			font-size: 1.2rem;
+		}
+	}
+	@media screen and (max-width: 640px) {
+		#nav-mobile li a {
+			font-size: 1rem;
+			padding: 0;
+			padding-top: 27%;
+		}
+	}
+	@media screen and (max-width: 572px) {
+		#nav-mobile li a {
+			font-size: .8rem !important;
+			padding-top: 34% !important;
+		}
+	}
+	@media screen and (max-width: 500px) {
+		#nav-mobile li a {
+			font-size: .7rem !important;
+			padding-top: 34% !important;
+		}
+	}
+	@media screen and (max-width: 467px) {
+		#nav-mobile li a {
+			font-size: .9rem !important;			
+			padding-top: 55% !important;
+		}
+		#nav-mobile li {
+			line-height: 2;
+		}
+	}	
 	@keyframes hidder {
 		0%{
 			-webkit-transform: scale(1,1);
