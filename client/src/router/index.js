@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import axios from 'axios'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 
@@ -68,9 +69,15 @@ const routes = [
   },
   {
     path: '/register',
-    name: 'login',
+    name: 'register',
     meta:{auth:false},
     component: () => import('../components/Register')
+  },
+  {
+    path: '/error',
+    name: 'error',
+    meta:{auth:false,error:true},
+    component: () => import('../components/Error')
   }
 ]
 
@@ -85,12 +92,25 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
-
-router.beforeEach((to, from, next) => {
-  (async function () {
-    const request = await axios.get(`http://127.0.0.1:8000/api/token?token=${getCookie('token')}`)
-    if(to.meta.auth && !request.data.token) next('/login')
-    else next()
-  })()  
+const reducedRoutes = routes.reduce((p,i) => 
+  i.children ? 
+    p.concat([{path:i.path},...i.children])
+  : p.concat(i.path !== '/error' && i)
+,[]).filter(e => !!e)
+router.beforeEach(async (to, from, next) => {  
+  let request
+  try {
+    request = await axios.get(`http://127.0.0.1:8000/api/token?token=${getCookie('token')}`)
+  } catch (e) {
+    console.log('errors with server connection')
+  }
+  if(request === undefined && reducedRoutes.findIndex(e => e.path === to.path) !== -1)
+    next('/error')
+  else if(to.meta.auth && request.data.token === false) next('/login')
+  else {
+    if(request !== undefined && !to.meta.error && reducedRoutes.findIndex(e => e.path === to.path) !== -1) next()
+    else if(request === undefined) next()
+    else console.log('no route')
+  }
 })
 export default router
