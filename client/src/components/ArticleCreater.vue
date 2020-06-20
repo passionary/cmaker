@@ -69,13 +69,13 @@ export default {
     }
   },
   async mounted() {
+    await this.auth()
+    this.email = this.user.email
     if(this.$route.params.art) {
       this.model = this.$route.params.art.c
       this.name = this.$route.params.art.n
       this.$refs.name.setAttribute('disabled','true')
     }
-    await this.auth()
-    this.email = this.user.email
   }
 }
 </script>

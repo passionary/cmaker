@@ -1,8 +1,14 @@
 <template>
   <div class="bb-custom-wrapper">
+    <div class="green lighten-3" v-if="message">
+      <p class="center-align white-text">{{message}}</p>
+    </div>
+    <div v-else-if="error" class="materialize-red lighten-3">
+      <p class="center-align white-text">{{error}}</p>
+    </div>
     <router-link :to="{name:'book-edit',params:{bk:$route.params.bk}}">edit book</router-link>
-  	<h3 class="text-center mt-3">Content</h3>
-    <div class="bb-bookblock mx-auto mt-5" v-if="books.length" id="bb-bookblock">
+  	<h3 class="center-align">Content</h3>
+    <div class="bb-bookblock" v-if="books.length" id="bb-bookblock">
       <div class="bb-item" v-for="(el,index) in books" :style="{backgroundColor:el.name,zIndex:Math.abs(index - books.length)}" :ref="index" :key="index">        
         <p class="content left-content">
           {{el[0] ? el[0].cont : ''}}
@@ -21,6 +27,20 @@
       <a id="bb-nav-next" href="#" class="bb-custom-icon bb-custom-icon-arrow-right">Next</a>
       <a id="bb-nav-last" href="#" class="bb-custom-icon bb-custom-icon-last">Last page</a>
     </nav>
+    <form action="http://127.0.0.1:8000/api/request" id="form" method="post" @submit.prevent="submitHandler">
+      <input type="hidden" name="request[type]" value="book">
+      <textarea name="request[message]" class="materialize-textarea" placeholder="Message">
+      </textarea>
+      <input type="text" name="request[author]" placeholder="Author">
+      <input type="hidden" name="request[email]" v-model="email">
+      <input type="hidden" name="item[name]" :value="$route.params.bk.n">
+      <input type="text" name="item[genre]" placeholder="Genre">
+      <input type="hidden" name="item[content]" :value="JSON.stringify(books)">
+      <input type="text" name="item[size]" placeholder="Size">
+      <input type="hidden" name="item[count_of_pages]" :value="books.length * 2">
+      <input type="text" name="item[tags]" placeholder="Tags">
+      <input type="submit" class="send btn cyan">
+    </form>
   </div>
 </template>
 
@@ -37,6 +57,10 @@
   .left-content{
     width: 48%;
     left:0;
+  }
+  nav {
+    background: none;
+    box-shadow: none;
   }
   .right-content{
     width: 48%;
@@ -55,20 +79,35 @@
 </style>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
+
 export default {
   name: 'HelloWorld',
   data:() => ({
   	book:'',
+    error:'',
+    email:'',
     content: '',
+    message:'',
     index:0,
     books:[],
     offset:0,
     pages:[],	
-  }),  
+  }),
+  computed: {
+    ...mapGetters(['user'])
+  },
   methods:{
+    ...mapActions(['auth']),
     initialize(){
       this.books = this.$route.params.bk.c;
-      console.log(this.books)
+      console.log(this.books,this.$route.params.bk)
+    },
+    submitHandler() {
+      axios.post('http://127.0.0.1:8000/api/request',new FormData(form))
+      .then(res => {
+        this.message = res.data.message
+      })
     },
     bookblock(){
       var Page = (function() {
@@ -153,6 +192,8 @@ export default {
     }
   },
   async mounted(){
+    await this.auth()
+    this.email = this.user.email
     await this.initialize();
     this.bookblock();
   }
