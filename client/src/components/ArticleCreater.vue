@@ -4,7 +4,7 @@
       <p class="center-align white-text">{{message}}</p>
     </div>
     <button class="btn cyan save" @click="saveHandler">save</button>
-    <input type="text" name="item[name]" placeholder="name" v-model="name">
+    <input type="text" ref="name" name="item[name]" placeholder="name" v-model="name">
     <ckeditor v-model="model" :config="options" />
     <form action="http://127.0.0.1:8000/api/request" id="form" method="post" class="form-group mx-auto mt-3" @submit.prevent="submitHandler">
       <input type="hidden" name="request[type]" value="article">
@@ -72,6 +72,7 @@ export default {
     if(this.$route.params.art) {
       this.model = this.$route.params.art.c
       this.name = this.$route.params.art.n
+      this.$refs.name.setAttribute('disabled','true')
     }
     await this.auth()
     this.email = this.user.email

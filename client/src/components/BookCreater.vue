@@ -5,7 +5,7 @@
   		<p class="center-align white-text">{{message}}</p>
   	</div>
     <div class="input-field">
-      <input id="name" :value="$route.params.bk.n" type="text" class="validate" placeholder="Book name" v-if="$route.params.bk && $route.params.bk.n">
+      <input id="name" :value="$route.params.bk.n" type="text" class="validate" placeholder="Book name" v-if="$route.params.bk && $route.params.bk.n" disabled="true">
       <input type="text" id="name" class="validate" placeholder="Book name" v-else>
     </div>  	
   	<div class="articles d-flex justify-content-between flex-wrap">

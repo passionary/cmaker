@@ -2,7 +2,7 @@
   <div class="books">
     <h4 class="center-align title">Choose a Content Type<div class="i-back"><i class="material-icons">mode_edit</i></div></h4>
     <div class="center-block">
-      <router-link :to="obj.path" v-for="obj in paths">
+      <router-link :to="obj.path" v-for="obj in paths" :key="obj.name">
         <div class="item" :class="obj.name">
           <img :src="obj.icon" alt="">
         </div>

@@ -1,19 +1,61 @@
 <template>
-  <div class="books h-75">
-    <h3 class="text-center mt-3">Content</h3>
-    <div class="mx-auto mt-5 d-flex justify-content-around flex-wrap" v-if="books">
-      <div class="child mt-3" v-for="(el,index) in books" :key="index">        
-      <p class="title text-center"><a href="" @click.prevent="$router.push({name:'book',params:{bk:{c:el.content,n:el.name}}})" class="text">{{el.name}}</a></p>
+  <div class="books">    
+    <div class="row" v-if="books.length">
+      <div class="col s4 m4" v-for="(el,index) in books" :key="index">
+        <div class="card medium">
+          <div class="card-image">
+            <img src="/images/icons8-open-book-96.png">
+          </div>
+          <div class="card-content">
+            <h5>{{el.content.length * 2}} pages</h5>
+          </div>
+          <div class="card-action">
+            <a href="" @click.prevent="$router.push({name:'book',params:{bk:{c:el.content,n:el.name}}})" class="text">{{el.name}}</a>
+            <a href="" @click.prevent="remove(el)" class="remove">&times;</a>
+          </div>
+        </div>
       </div>
     </div>
-    <h1 v-else class="text-center">No content</h1>
+    <div class="no-content center-align" v-else><span>no books</span></div>
   </div>
 </template>
 
 <style scoped>  
   .books{
-    position: relative;
-  }    
+    padding: 0 20px 0 20px;
+  }
+  .card-action {
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    justify-content: space-between;
+  }
+  .card-action a {
+    line-height: 1;
+  }
+  .text {
+    margin-top: 7px;
+  }
+  .remove {
+    font-size: 28px;
+    margin-right: 0 !important;
+  }
+  .card-image img {
+    width: 80%;
+    margin: 0 auto;
+  }
+  .no-content {    
+    margin: 0 auto;
+    margin-top: 270px;
+  }
+  .no-content span{
+    font-size: 44px;
+    text-transform: uppercase;
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+    font-family: TitilliumWeb-LightItalic;
+  }
   .title{
     margin-top: 62%;
   }
@@ -38,8 +80,14 @@ export default {
     offset:0,
     pages:[]
   }),   
-    
-  mounted(){        
+  methods: {
+    remove(el) {
+      const book = Object.keys(localStorage).filter(e => /type=book/.test(e)).find(e => e.match(new RegExp(`name=${el.name}`)))
+      this.books.splice(this.books.findIndex(e => e.name === el.name),1)
+      localStorage.removeItem(book)
+    }
+  },
+  mounted(){
     for(let i=0;i<Object.keys(localStorage).length;i++){
       if (Object.keys(localStorage)[i] != 'loglevel:webpack-dev-server'){
         const keys = Object.keys(localStorage)[i].split(',')
@@ -50,7 +98,7 @@ export default {
           content:JSON.parse(localStorage.getItem(Object.keys(localStorage)[i]))
         })
       }
-    }       
+    }
   }
 }
 </script>
