@@ -13,25 +13,26 @@ class UserController extends Controller
   public function registr(Request $request)
   {  	
   	$rules = [
-  		'username' => 'required',
-  		'email' => 'required|unique',
+  		'name' => 'required',
+  		'email' => 'required',
   		'password' => 'required'
   	];
   	$valid = \Validator::make($request->all(),$rules);
   	if($valid->fails()) return response()->json(['errors',$valid->errors()->all()]);
-  	
   	$user = User::create([
-      'username' => $request->username,
+      'username' => $request->name,
       'email' => $request->email,
       'password' => Hash::make($request->password),
       'api_token' => Str::random(60)
     ]);  	
 
-  	return redirect('http://localhost:8080');
+  	return [
+      'token' => $user->api_token
+    ];
   }
   public function login(Request $request)
   {            
-  	if(null!=($user = User::where('email',$request->email)->first()) && Hash::check($request->password,$user->password)) {      
+  	if(null!=($user = User::where('email',$request->email)->first()) && Hash::check($request->password,$user->password)) {
        $token = Str::random(60);
 
         $user->api_token = $token;
@@ -40,7 +41,7 @@ class UserController extends Controller
         return ['token' => $token];
   	}
     
-  	return redirect()->back()->with(['message','invalid data'],401);
+  	return response()->json(['message' => 'invalid data'],401);
   }
   public function logout(Request $request)
   {

@@ -38,12 +38,16 @@ class ContentActions extends Action
 				'request_id' => $req->id
 			]);
 			$book = json_decode($request['item']['content'],true);
-			for($i=0;$i<count($book);$i++){
-				\App\Page::create([
-					'content' => $book[$i]['cont'],
-					'book_id' => $result->id,
-					'order_id' => $i + 1
-				]);				
+			$order = 0;
+			foreach($book as $arr_b) {
+				foreach($arr_b as $b) {
+					$order++;
+					\App\Page::create([
+						'content' => $b['cont'],
+						'book_id' => $result->id,
+						'order_id' => $order
+					]);				
+				}				
 			}									
 			return response()->json(['message' => 'your book was sent successfully'],200);
 		});
@@ -83,12 +87,12 @@ class ContentActions extends Action
 			$rules2 = [
 				'name' => 'required',				
 				'tags' => 'required',							
-			];			
+			];				
 			$requestValid = \Validator::make($request['request'],$rules);
 			$itemValid = \Validator::make($request['item'],$rules2);			
 			if($requestValid->fails() || $itemValid->fails()) return response()->json(['message' => 'invalid data'],400);
-			$req = \App\Request::create($request['request']);			
-			$path = Storage::disk('public')->putFile('videos',$request->file('path'));			
+			$req = \App\Request::create($request['request']);
+			$path = Storage::disk('public')->putFile('videos',$request->file('file'));	
 			$video = Video::create([
 				'name' => $request['item']['name'],				
 				'path' => $path,

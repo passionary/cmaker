@@ -27,20 +27,18 @@ class RequestController extends Controller
   }
   public function performRequest(Request $request)
   {        
-    $actions = new ContentActions($request);    
+    $actions = new ContentActions($request);
     return $actions->contentActions[$request['request']['type']]();
   }
-  public function mail($user,$email)
+  public function mail($email)
   {        
-    return view('mail',[
-      'user' => $user,
+    return view('email',[
       'email' => $email
     ]);
   }
   public function sendEmail(Request $request)
   {
     $rules = [
-      "email" => 'required|email',
       "sender" => 'required',
       'to' => 'required',
       "subject" => 'required',
@@ -50,11 +48,15 @@ class RequestController extends Controller
 
     if($valid->fails()) return redirect()->back()->withErrors($valid->errors());
     
-    file_put_contents('/home/passionary/Desktop/contentmaker/bookmaker-server/resources/views/message.blade.php',$request->message);    
-      Mail::send(['text' => 'message'],['name','name'],function($message) use($request){
-        $message->from(env('MAIL_USERNAME'),$request->sender);
-        $message->to($request->email,$request->to)->subject($request->subject ?? '');
-      });          
-      return redirect()->back()->with('message','your message was send.');
+    $root = strrev($_SERVER["DOCUMENT_ROOT"]);
+    $patch = preg_match('/\//',$root,$matches,PREG_OFFSET_CAPTURE);
+    if($patch !== 1) return response()->json(['message' => 'error with directory'],403);
+    $root = strrev(substr($root,$matches[0][1]));
+    file_put_contents($root . '/resources/views/message.blade.php',$request->message);
+     Mail::send(['text' => 'message'], ['name','name'], function($message) use($request) {
+        $message->from(env('MAIL_USERNAME'), $request->sender);
+        $message->to($request->to)->subject($request->subject);
+    });     
+    return redirect()->back()->with('message','your message was send.');
   }
 }
