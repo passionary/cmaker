@@ -7,6 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Video extends Model
 {
     protected $fillable = [
-		'name','path','author','tags','request_id'
-	];	
+		'name','path','tags','request_id'
+	];
 }

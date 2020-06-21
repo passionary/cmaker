@@ -14,11 +14,11 @@ class UserController extends Controller
   {  	
   	$rules = [
   		'name' => 'required',
-  		'email' => 'required',
+  		'email' => 'required|email|unique:users',
   		'password' => 'required'
   	];
   	$valid = \Validator::make($request->all(),$rules);
-  	if($valid->fails()) return response()->json(['errors',$valid->errors()->all()]);
+  	if($valid->fails()) return response()->json(['errors' => $valid->errors()->all()]);
   	$user = User::create([
       'username' => $request->name,
       'email' => $request->email,
@@ -31,7 +31,13 @@ class UserController extends Controller
     ];
   }
   public function login(Request $request)
-  {            
+  {
+    $rules = [
+      'email' => 'required|email',
+      'password' => 'required'
+    ];
+    $valid = \Validator::make($request->all(),$rules);
+    if($valid->fails()) return response()->json(['errors' => $valid->errors()->all()]);
   	if(null!=($user = User::where('email',$request->email)->first()) && Hash::check($request->password,$user->password)) {
        $token = Str::random(60);
 

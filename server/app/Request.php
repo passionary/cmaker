@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Request extends Model
 {
     protected $fillable = [
-		'type','message','author','email'
+		'type','message','author','email','user_id'
 	];
 	public function book()
 	{

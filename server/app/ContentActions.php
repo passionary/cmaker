@@ -85,7 +85,7 @@ class ContentActions extends Action
 				'author' => 'required',
 			];
 			$rules2 = [
-				'name' => 'required',				
+				'name' => 'required',
 				'tags' => 'required',							
 			];				
 			$requestValid = \Validator::make($request['request'],$rules);
