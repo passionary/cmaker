@@ -2,6 +2,7 @@ import Vue from 'vue'
 import axios from 'axios'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import { getCookie } from '../modules'
 
 Vue.use(VueRouter)
 
@@ -88,12 +89,6 @@ const routes = [
   }
 ]
 
-const getCookie = (name) => {
-  let matches = document.cookie.match(new RegExp(
-    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
-  ));
-  return matches ? decodeURIComponent(matches[1]) : undefined;
-}
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,

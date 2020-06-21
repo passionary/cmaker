@@ -1,13 +1,20 @@
-import $ from 'jquery'
 import 'materialize-css/dist/css/materialize.min.css'
 import 'materialize-css/dist/js/materialize.min'
-import ckeditor from 'ckeditor4-vue'
 import Vue from 'vue'
+import $ from 'jquery'
+import axios from 'axios';
+import ckeditor from 'ckeditor4-vue'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import axios from 'axios';
 
+library.add(faSignOutAlt)
+
+Vue.component('font-awesome-icon',FontAwesomeIcon)
 
 Vue.use(ckeditor)
 

@@ -1,7 +1,11 @@
 <template>
-  <div class="root">  		
-		<div class="row">
+  <div class="root">  	
+		<div class="row">			
 			<main class="col s9 m9">
+				<div class="logout" @click="logout">
+					<span>sign out</span>
+					<font-awesome-icon icon="sign-out-alt" />
+				</div>				
 				<div class="title">
 					<p class="center-align"></p>					
 				</div>
@@ -48,7 +52,29 @@
 		</div>  	
   </div>	
 </template>
-<style scoped>	
+<style scoped>
+	.logout {
+		position: absolute;
+		right:18px;
+		z-index: 100;
+		cursor: pointer;
+		top: 15px;
+	}
+	.logout > span {
+		border-bottom: 1px solid rgba(0,0,0,0.2);
+		margin-right: 7px;
+		font-size: 14px;
+		letter-spacing: 1px;
+		vertical-align: top;		
+		text-transform: uppercase;
+		font-family: AlegreyaSans-Thin;
+		font-weight: bold;
+	}
+	.fa-sign-out-alt {
+		color: #d76b6b;
+		vertical-align: baseline;
+		font-size: 21px;		
+	}
 	.top-side {
 		display: -webkit-flex;
 		display: -moz-flex;
@@ -65,7 +91,7 @@
 	.top-side > span {
 		position: absolute;
 		top:-4px;
-		left:14%;
+		left:10%;
 		font-size: 15px;
 		color: #000;
 		letter-spacing: 2px;
@@ -259,6 +285,7 @@
 		min-height: 646px;
 	}
 	main {
+		position: relative;
 		min-height: inherit;
 	}	
 	.root {
@@ -383,7 +410,8 @@
 </style>
 <script>
 import $ from 'jquery'
-
+import { mapActions, mapGetters } from 'vuex'
+import { getCookie,deleteCookie } from '@/modules'
 export default {
   name: 'home',
   data:() => ({
@@ -395,7 +423,23 @@ export default {
 		  	{name:'your videos',path:'/self-videos'},
 	  	]	
   }),
+  computed: {
+    ...mapGetters(['user'])
+  },
   methods: {
+  	...mapActions(['auth']),
+  	logout() {
+  		const token = getCookie('token')
+
+  		axios.get(`http://127.0.0.1:8000/api/logout?token=${token}`)
+  		.then(res => {
+  			 M.toast({html: 'you are logged out'})
+  		})
+  		.then(() => {
+  			deleteCookie('token')
+  			this.$router.push('/login')
+  		})
+  	},
   	hide(e){
   		$('.top-wrapper').css('display','flex')
   		if(parseInt($('#nav-mobile').css('top')) > 190){
@@ -420,7 +464,9 @@ export default {
   		}  		
   	}
   },
-  mounted(){
+  async mounted(){
+  	await this.auth()
+    this.username = this.user.name
   	$(document).ready(function(){
 	    $('.m-toggle').click(function(){
 	    	if($('#nav-mobile').css('opacity') == 0) {
