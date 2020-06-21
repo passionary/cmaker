@@ -71,6 +71,7 @@
 </style>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'HelloWorld',
   data: () => ({
@@ -79,26 +80,36 @@ export default {
     books:[],
     offset:0,
     pages:[]
-  }),   
+  }),
+  computed: {
+    ...mapGetters(['user'])
+  },
   methods: {
+    ...mapActions(['auth']),
     remove(el) {
       const book = Object.keys(localStorage).filter(e => /type=book/.test(e)).find(e => e.match(new RegExp(`name=${el.name}`)))
       this.books.splice(this.books.findIndex(e => e.name === el.name),1)
       localStorage.removeItem(book)
     }
   },
-  mounted(){
-    for(let i=0;i<Object.keys(localStorage).length;i++){
-      if (Object.keys(localStorage)[i] != 'loglevel:webpack-dev-server'){
-        const keys = Object.keys(localStorage)[i].split(',')
-        const vals = keys.map(e => e.split('='))
-        if(vals[0][1] == 'book')
-        this.books.push({
-          name:vals[1][1],
-          content:JSON.parse(localStorage.getItem(Object.keys(localStorage)[i]))
-        })
-      }
-    }
+  async mounted(){
+    await this.auth()
+    axios.get(`http://127.0.0.1:8000/api/requests?user_id=${this.user.id}&type=book`)
+    .then(res => {
+      console.log(res,this.user)
+      this.books = res.data
+    })
+    // for(let i=0;i<Object.keys(localStorage).length;i++){
+    //   if (Object.keys(localStorage)[i] != 'loglevel:webpack-dev-server'){
+    //     const keys = Object.keys(localStorage)[i].split(',')
+    //     const vals = keys.map(e => e.split('='))
+    //     if(vals[0][1] == 'book')
+    //     this.books.push({
+    //       name:vals[1][1],
+    //       content:JSON.parse(localStorage.getItem(Object.keys(localStorage)[i]))
+    //     })
+    //   }
+    // }
   }
 }
 </script>

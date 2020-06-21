@@ -56,6 +56,7 @@
 </style>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'HelloWorld',
   data: () => ({
@@ -66,24 +67,33 @@ export default {
     pages:[]
   }),   
   methods: {
+    ...mapActions(['auth']),
     remove(el) {
       const video = Object.keys(localStorage).filter(e => /type=video/.test(e)).find(e => e.match(new RegExp(`name=${el.name}`)))
       this.videos.splice(this.videos.findIndex(e => e.name === el.name),1)
       localStorage.removeItem(video)
     }
   },
-  mounted(){        
-    for(let i=0;i<Object.keys(localStorage).length;i++){
-      if (Object.keys(localStorage)[i] != 'loglevel:webpack-dev-server'){
-        const keys = Object.keys(localStorage)[i].split(',')
-        const vals = keys.map(e => e.split('='))
-        if(vals[0][1] == 'video')
-        this.videos.push({
-          name:vals[1][1],
-          content:localStorage.getItem(Object.keys(localStorage)[i])
-        })
-      }
-    }       
+  computed: {
+    ...mapGetters(['user'])
+  },
+  async mounted(){
+    await this.auth()
+    axios.get(`http://127.0.0.1:8000/api/requests?user_id=${this.user.id}&type=video`)
+    .then(res => {
+      this.videos = res.data
+    })
+    // for(let i=0;i<Object.keys(localStorage).length;i++){
+    //   if (Object.keys(localStorage)[i] != 'loglevel:webpack-dev-server'){
+    //     const keys = Object.keys(localStorage)[i].split(',')
+    //     const vals = keys.map(e => e.split('='))
+    //     if(vals[0][1] == 'video')
+    //     this.videos.push({
+    //       name:vals[1][1],
+    //       content:localStorage.getItem(Object.keys(localStorage)[i])
+    //     })
+    //   }
+    // }       
   }
 }
 </script>
