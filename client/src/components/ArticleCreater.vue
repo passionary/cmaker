@@ -11,7 +11,8 @@
       <textarea name="request[message]" class="materialize-textarea" placeholder="message">
       </textarea>
       <input type="text" name="request[author]" class="form-control" placeholder="author">
-      <input type="hidden" name="request[email]" v-model="email" class="form-control" placeholder="author">
+      <input type="hidden" name="request[email]" v-model="user.email" class="form-control" placeholder="author">
+      <input type="hidden" name="request[user_id]" v-model="user.id">
       <input type="text" name="item[subject]" class="form-control" placeholder="subject">
       <input type="hidden" name="item[content]" v-model="model">
       <input type="hidden" name="item[name]" class="form-control" placeholder="name" v-model="name">
@@ -70,7 +71,6 @@ export default {
   },
   async mounted() {
     await this.auth()
-    this.email = this.user.email
     if(this.$route.params.art) {
       this.model = this.$route.params.art.c
       this.name = this.$route.params.art.n

@@ -32,7 +32,8 @@
       <textarea name="request[message]" class="materialize-textarea" placeholder="Message">
       </textarea>
       <input type="text" name="request[author]" placeholder="Author">
-      <input type="hidden" name="request[email]" v-model="email">
+      <input type="hidden" name="request[email]" v-model="user.email">
+      <input type="hidden" name="request[user_id]" v-model="user.id">
       <input type="hidden" name="item[name]" :value="$route.params.bk.n">
       <input type="text" name="item[genre]" placeholder="Genre">
       <input type="hidden" name="item[content]" :value="JSON.stringify(books)">
@@ -192,8 +193,7 @@ export default {
     }
   },
   async mounted(){
-    await this.auth()
-    this.email = this.user.email
+    await this.auth()    
     await this.initialize();
     this.bookblock();
   }
