@@ -4,11 +4,11 @@
       <div class="col s4 m4" v-for="(el,index) in videos" :key="index">
         <div class="card small">
           <div class="card-image">
-            <video :src="'http://127.0.0.1:8000/storage/' + el.content" controls=""></video>
+            <video :src="'http://127.0.0.1:8000/storage/' + el.path" controls=""></video>
           </div>          
           <div class="card-action">
-            <a class="text">{{el.name}}</a>
-            <a href="" @click.prevent="remove(el)" class="remove">&times;</a>
+            <router-link :to="{name:'video-edit',params:{video:{video:el,request:el.request}}}" class="text">{{el.name}}</router-link>
+            <a href="" @click.prevent="remove(el.id)" class="remove">&times;</a>
           </div>
         </div>
       </div>
@@ -68,10 +68,11 @@ export default {
   }),   
   methods: {
     ...mapActions(['auth']),
-    remove(el) {
-      const video = Object.keys(localStorage).filter(e => /type=video/.test(e)).find(e => e.match(new RegExp(`name=${el.name}`)))
-      this.videos.splice(this.videos.findIndex(e => e.name === el.name),1)
-      localStorage.removeItem(video)
+    remove(id) {
+      axios.get(`http://127.0.0.1:8000/api/remove-video?video_id=${id}`)
+      .then(res => {
+        this.videos.splice(this.videos.findIndex(e => e.id === id),1)
+      })
     }
   },
   computed: {

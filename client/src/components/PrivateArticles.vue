@@ -11,7 +11,7 @@
           </div>
           <div class="card-action">
             <a href="" @click.prevent="$router.push({name:'article-edit',params:{art:{article:el,request:el.request}}})">{{el.name}}</a>
-            <a href="" @click.prevent="remove(el)" class="remove">&times;</a>
+            <a href="" @click.prevent="remove(el.id)" class="remove">&times;</a>
           </div>
         </div>
       </div>
@@ -76,17 +76,17 @@ export default {
   },
   methods: {
     ...mapActions(['auth']),
-    remove(el) {
-      const article = Object.keys(localStorage).filter(e => /type=article/.test(e)).find(e => e.match(new RegExp(`name=${el.name}`)))
-      this.articles.splice(this.articles.findIndex(e => e.name === el.name),1)
-      localStorage.removeItem(article)
+    remove(id) {
+      axios.get(`http://127.0.0.1:8000/api/remove-article?article_id=${id}`)
+      .then(res => {
+        this.articles.splice(this.articles.findIndex(e => e.id === id),1)
+      })
     }
   },
   async mounted(){
     await this.auth()
     axios.get(`http://127.0.0.1:8000/api/requests?user_id=${this.user.id}&type=article`)
     .then(res => {
-      console.log(res,this.user)
       this.articles = res.data
     })
     // for(let i=0;i<Object.keys(localStorage).length;i++){

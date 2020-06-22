@@ -7,11 +7,11 @@
             <img src="/images/icons8-open-book-96.png">
           </div>
           <div class="card-content">
-            <h5>{{el.content && el.content.length * 2}} pages</h5>
+            <h5>{{el.pages.length}} pages</h5>
           </div>
           <div class="card-action">
-            <a href="" @click.prevent="$router.push({name:'book',params:{bk:{book:el,request:el.request,user_id:user.id}}})" class="text">{{el.name}}</a>
-            <a href="" @click.prevent="remove(el)" class="remove">&times;</a>
+            <a href="" @click.prevent="$router.push({name:'book',params:{bk:{book:el,request:el.request}}})" class="text">{{el.name}}</a>
+            <a href="" @click.prevent="remove(el.id)" class="remove">&times;</a>
           </div>
         </div>
       </div>
@@ -86,17 +86,17 @@ export default {
   },
   methods: {
     ...mapActions(['auth']),
-    remove(el) {
-      const book = Object.keys(localStorage).filter(e => /type=book/.test(e)).find(e => e.match(new RegExp(`name=${el.name}`)))
-      this.books.splice(this.books.findIndex(e => e.name === el.name),1)
-      localStorage.removeItem(book)
+    remove(id) {
+      axios.get(`http://127.0.0.1:8000/api/remove-book?book_id=${id}`)
+      .then(res => {
+        this.books.splice(this.books.findIndex(e => e.id === id),1)
+      })
     }
   },
   async mounted(){
     await this.auth()
     axios.get(`http://127.0.0.1:8000/api/requests?user_id=${this.user.id}&type=book`)
     .then(res => {
-      console.log(res,this.user)
       this.books = res.data
     })
     // for(let i=0;i<Object.keys(localStorage).length;i++){

@@ -66,7 +66,13 @@ const routes = [
         name:'article-edit',
         component: () => import('../components/ArticleCreater'),
         meta:{auth:true},
-      }
+      },
+      {
+        path: '/video/create/:video',
+        name:'video-edit',
+        component: () => import('../components/VideoCreater'),
+        meta:{auth:true},
+      },
     ],
   },
   {

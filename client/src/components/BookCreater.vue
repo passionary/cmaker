@@ -58,8 +58,8 @@
 	}
 	.save{
 		position: relative;
-		left: 85.7%;
-    top:20px;
+		left: 5.2%;
+    top:10px;
 		letter-spacing: 3px;
 		text-transform: uppercase;
 		font-size: 14px;
@@ -74,7 +74,6 @@ export default {
   data:() => ({
   	bookData:[],
   	lastIndex:3,
-  	sendData:[],
     name:'',
     error:'',
     created:[],
@@ -88,29 +87,28 @@ export default {
   methods:{
     ...mapActions(['auth']), 
   	addPages(){
-      this.bookData.push(new Map())
+      this.bookData.push({left:new Map(),right:new Map()})
   		setTimeout(() => {
   			this.$refs.article[this.$refs.article.length - 1].classList.add('appearing')
   		},100)
   	},
   	save(event){      
-  	 	let key = event.target.placeholder == 'left page' ? 0 : 1;
+  	 	let key = event.target.placeholder == 'left page' ? 'left' : 'right';
       let page      
-  		this.bookData[+event.target.name].set(key,{content:event.target.value});
+  		this.bookData[+event.target.name][key].set("content",event.target.value);
   	},
-  	show(){  		  		  	  			  	
+  	show(){
+      let sendData = []
   		this.bookData.forEach((item,i) => {
-        if(item.size) {
-          let jitem = []
-          jitem.push(item.get(0) || {content:""},item.get(1) || {content:""})
-          this.sendData.push(jitem)
-        }        
+        let jitem = []
+        jitem.push(item.left.get('content') ? {content:item.left.get('content')} : {content:""},item.right.get('content') ? {content:item.right.get('content')} : {content:""})
+        sendData.push(jitem)
   		})
-      console.log(JSON.stringify(this.sendData))
+      console.log(sendData,this.bookData)
       if(this.$route.params.bk || this.created[0]) {
         axios.post('http://127.0.0.1:8000/api/save-book', {
           id:this.created[0] ? this.created[1] : this.$route.params.bk.book.id,
-          pages:JSON.stringify(this.sendData)
+          pages:JSON.stringify(sendData)
         })
         .then(res => {
           console.log(res)
@@ -129,27 +127,27 @@ export default {
         body: JSON.stringify({
           user_id: this.user.id,
           name: this.name,
-          pages:JSON.stringify(this.sendData)
+          pages:JSON.stringify(sendData)
         })
       })
       .then(res => res.json())
       .then(data => {
         console.log(data)
         this.created[0] = true
-        this.created[1] = res.data.id
+        this.created[1] = data.id
       })      
-      if(this.sendData.length)
+      if(sendData.length)
       this.message = 'your book saved'
   	},
   	bookFuller(){
   		for(let i=0;i<3;i++){
-	    	this.bookData.push(new Map());
+	    	this.bookData.push({left:new Map(),right:new Map()});
 	    }
   	}
   },
   async mounted(){
     await this.auth()
-    if(this.$route.params.bk) {      
+    if(this.$route.params.bk) {
       this.name = this.$route.params.bk.book.name;
       this.bookData = this.$route.params.bk.book.pages.map((e,i) => new Map(
         Object.entries(e))
@@ -168,6 +166,7 @@ export default {
         }
       }
       this.bookData = pages
+      // console.log(this.bookData)
       setTimeout(() => {
         this.$refs.article.forEach(e => e.classList.add('appearing'))
       },100)

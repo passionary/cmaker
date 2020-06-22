@@ -15,8 +15,7 @@
       </textarea>
       <input type="text" name="request[author]" class="form-control" placeholder="author" v-model="author">
       <input type="hidden" name="request[email]" v-model="user.email" class="form-control">
-      <input type="hidden" name="item[user_id]" v-model="user.id">
-      <input type="hidden" name="article_id" :value="$route.params.art && $route.params.art.article.id">
+      <input type="hidden" name="article_id" :value="$route.params.art && $route.params.art.article.id || created[1]">
       <input type="text" name="item[subject]" class="form-control" placeholder="subject" v-model="subject">
       <input type="hidden" name="item[content]" v-model="content">
       <input type="hidden" name="item[name]" class="form-control" placeholder="name" v-model="name">
@@ -71,6 +70,7 @@ export default {
   	saveHandler() {
       // localStorage.setItem(`type=article,name=${this.name}`,this.model)
       if(this.$route.params.art || this.created[0]) {
+        console.log(this.created)
         axios.post('http://127.0.0.1:8000/api/save-article',{
           id: this.created[0] ? this.created[1] : this.$route.params.art.article.id,
           content: this.content

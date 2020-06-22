@@ -10,8 +10,9 @@
       </textarea>
       <input type="text" name="request[author]" class="form-control" placeholder="author" v-model="author">
       <input type="hidden" name="item[name]" class="form-control" placeholder="name" :value="name">
+      <input type="hidden" name="video_id" :value="$route.params.video && $route.params.video.video.id">
+      <input type="hidden" name="user_id" :value="user.id">
       <input type="hidden" name="request[email]" class="form-control" placeholder="name" v-model="user.email">
-      <input type="hidden" name="request[user_id]" class="form-control" placeholder="name" v-model="user.id">
       <input type="hidden" name="MAX_FILE_SIZE" value="3000000000" />          
       <div class="file-field input-field">
       <div class="btn cyan">
@@ -55,6 +56,7 @@ export default {
     submitHandler() {
       axios.post('http://127.0.0.1:8000/api/request',new FormData(form))
       .then(res => {
+        console.log(res)
         this.nmessage = 'your video sended successfully'
         localStorage.setItem(`type=video,name=${this.name}`,res.data.video)
       })
@@ -65,6 +67,18 @@ export default {
   },
   async mounted() {
     await this.auth()
+    if(this.$route.params.video) {
+      const video = this.$route.params.video.video;
+      const request = this.$route.params.video.request;
+      for(const key in video){
+        if(key in this)
+        this[key] = video[key]
+      }
+      for(const key in request){
+        if(key in this)
+        this[key] = request[key]
+      }      
+    }
   }
 }
 </script>

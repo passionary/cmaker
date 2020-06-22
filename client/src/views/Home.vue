@@ -431,9 +431,10 @@ export default {
   	logout() {
   		const token = getCookie('token')
 
-  		axios.get(`http://127.0.0.1:8000/api/logout?token=${token}`)
+  		fetch(`http://127.0.0.1:8000/api/logout?token=${token}`)
+  		.then(res => res.json())
   		.then(res => {
-  			 M.toast({html: 'you are logged out'})
+  			M.toast({html: res.message})
   		})
   		.then(() => {
   			deleteCookie('token')

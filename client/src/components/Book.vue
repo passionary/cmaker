@@ -1,7 +1,7 @@
 <template>
   <div class="bb-custom-wrapper">
-    <div class="green lighten-3" v-if="message">
-      <p class="center-align white-text">{{message}}</p>
+    <div class="green lighten-3" v-if="nmessage">
+      <p class="center-align white-text">{{nmessage}}</p>
     </div>
     <div v-else-if="error" class="materialize-red lighten-3">
       <p class="center-align white-text">{{error}}</p>
@@ -29,17 +29,16 @@
     </nav>
     <form action="http://127.0.0.1:8000/api/request" id="form" method="post" @submit.prevent="submitHandler">
       <input type="hidden" name="request[type]" value="book">
-      <textarea name="request[message]" class="materialize-textarea" placeholder="Message">
+      <textarea name="request[message]" class="materialize-textarea" placeholder="Message" v-model="message">
       </textarea>
-      <input type="text" name="request[author]" placeholder="Author">
+      <input type="text" name="request[author]" placeholder="Author" v-model="author">
       <input type="hidden" name="request[email]" v-model="user.email">
-      <input type="hidden" name="request[user_id]" v-model="user.id">
-      <input type="hidden" name="item[name]" :value="$route.params.bk.n">
-      <input type="text" name="item[genre]" placeholder="Genre">
-      <input type="hidden" name="item[content]" :value="JSON.stringify(books)">
-      <input type="text" name="item[size]" placeholder="Size">
+      <input type="hidden" name="item[name]" :value="$route.params.bk.book.name">
+      <input type="text" name="item[genre]" placeholder="Genre" v-model="genre">
+      <input type="hidden" name="book_id" :value="$route.params.bk && $route.params.bk.book.id">      
+      <input type="text" name="item[size]" placeholder="Size" v-model="size">
       <input type="hidden" name="item[count_of_pages]" :value="books.length * 2">
-      <input type="text" name="item[tags]" placeholder="Tags">
+      <input type="text" name="item[tags]" placeholder="Tags" v-model="tags">
       <input type="submit" class="send btn cyan">
     </form>
   </div>
@@ -85,15 +84,15 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'HelloWorld',
   data:() => ({
-  	book:'',
     error:'',
     email:'',
-    content: '',
+    nmessage:'',
+    genre:'',
+    size:'',
+    tags:'',
+    author:'',
     message:'',
-    index:0,
     books:[],
-    offset:0,
-    pages:[],	
   }),
   computed: {
     ...mapGetters(['user'])
@@ -118,10 +117,18 @@ export default {
       this.books = pages
     },
     submitHandler() {
-      axios.post('http://127.0.0.1:8000/api/request',new FormData(form))
-      .then(res => {
-        this.message = res.data.message
+      fetch('http://127.0.0.1:8000/api/request', {
+        method: 'POST',        
+        body: new FormData(form)
       })
+      .then(res => res.text())
+      .then(data => {
+        console.log(data)        
+      })
+      // axios.post('http://127.0.0.1:8000/api/request',new FormData(form))
+      // .then(res => {
+      //   this.nmessage = res.data.message
+      // })
     },
     bookblock(){
       var Page = (function() {
@@ -207,9 +214,20 @@ export default {
   },
   async mounted(){
     await this.auth()    
-    await this.initialize();
-    console.log(this.books)
+    await this.initialize();    
     this.bookblock();
+    if(this.$route.params.bk) {
+      const book = this.$route.params.bk.book;
+      const request = this.$route.params.bk.request;
+      for(const key in book){
+        if(key in this)
+        this[key] = book[key]
+      }
+      for(const key in request){
+        if(key in this)
+        this[key] = request[key]
+      }      
+    }
   }
 }
 </script>
