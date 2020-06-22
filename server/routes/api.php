@@ -28,5 +28,6 @@ Route::post('/create-article','ApiController@createArticle');
 Route::post('/save-article','ApiController@saveArticle');
 Route::post('/create-book','ApiController@createBook');
 Route::post('/save-book','ApiController@saveBook');
-Route::post('/create-video','ApiController@createVideo');
-Route::post('/save-video','ApiController@saveVideo');
+Route::get('/remove-book','ApiController@removeBook');
+Route::get('/remove-article','ApiController@removeArticle');
+Route::get('/remove-video','ApiController@removeVideo');

@@ -20,35 +20,23 @@ class ContentActions extends Action
 			$rules2 = [
 				'genre' => 'required',
 				'name' => 'required',
-				'content' => 'required',
 				'size' => 'required',
 				'count_of_pages' => 'required',
 				'tags' => 'required',
 			];
 			$requestValid = \Validator::make($request['request'],$rules);
 			$itemValid = \Validator::make($request['item'],$rules2);
-			if($requestValid->fails() || $itemValid->fails()) return response()->json(['message' => 'invalid data'],400);
-			$req = \App\Request::create($request['request']);
-			$result = Book::create([
-				'genre' => $request['item']['genre'],
-				'name' => $request['item']['name'],
-				'size' => $request['item']['size'],
-				'count_of_pages' => $request['item']['count_of_pages'],
-				'tags' => $request['item']['tags'],
-				'request_id' => $req->id
-			]);
-			$book = json_decode($request['item']['content'],true);
-			$order = 0;
-			foreach($book as $arr_b) {
-				foreach($arr_b as $b) {
-					$order++;
-					\App\Page::create([
-						'content' => $b['cont'],
-						'book_id' => $result->id,
-						'order_id' => $order
-					]);				
-				}				
-			}									
+			if($requestValid->fails() || $itemValid->fails()) return response()->json(['errors' => $itemValid->errors(),'errors2' => $requestValid->errors()]);
+			$book = Book::find($request->book_id);
+			foreach($request['item'] as $key => $value) {
+				$book[$key] = $value;
+				$book->save();
+			}
+			$req = \App\Request::find($book->request_id);
+			foreach($request['request'] as $key => $value){
+				$req[$key] = $value;
+				$req->save();
+			}
 			return response()->json(['message' => 'your book was sent successfully'],200);
 		});
 		parent::__construct('article',function() use($request){	
@@ -66,7 +54,7 @@ class ContentActions extends Action
 			];
 			$requestValid = \Validator::make($request['request'],$rules);
 			$itemValid = \Validator::make($request['item'],$rules2);
-			if($requestValid->fails() || $itemValid->fails()) return response()->json(['message' => 'invalid data'],400);
+			if($requestValid->fails() || $itemValid->fails()) return response()->json(['errors' => $itemValid->errors(),'errors2' => $requestValid->errors()]);
 			$article = Article::find($request->article_id);
 			foreach($request['item'] as $key => $value) {
 				$article[$key] = $value;
@@ -91,13 +79,27 @@ class ContentActions extends Action
 				'tags' => 'required',							
 			];				
 			$requestValid = \Validator::make($request['request'],$rules);
-			$itemValid = \Validator::make($request['item'],$rules2);			
-			if($requestValid->fails() || $itemValid->fails()) return response()->json(['message' => 'invalid data'],400);
+			$itemValid = \Validator::make($request['item'],$rules2);
+			if($requestValid->fails() || $itemValid->fails()) return response()->json(['errors' => $itemValid->errors(),'errors2' => $requestValid->errors()]);
+			if($request->video_id) {
+				$video = Video::find($request->video_id);
+				foreach($request['item'] as $key => $value) {
+					$video[$key] = $value;
+					$video->save();
+				}	
+				$req = \App\Request::find($video->request_id);
+				foreach($request['request'] as $key => $value){
+					$req[$key] = $value;
+					$req->save();
+				}
+				return response()->json(['message' => 'your request was updated successfully','video' => $video->path],200);
+			}
 			$req = \App\Request::create($request['request']);
-			$path = Storage::disk('public')->putFile('videos',$request->file('file'));	
+			$path = Storage::disk('public')->putFile('videos',$request->file('file'));
 			$video = Video::create([
 				'name' => $request['item']['name'],				
 				'path' => $path,
+				'user_id' => $request->user_id,
 				'tags' => $request['item']['tags'],
 				'request_id' => $req->id
 			]);

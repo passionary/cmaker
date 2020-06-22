@@ -17,11 +17,16 @@
         <h5 class="">{{$request->message}}</h5>
       </div>
       <div class="card-action">
-        <a href="{{route($request->type,[
-            'request' => $request->id,
-            'id' => $request[$request->type]
-          ])}}">{{$request->author}}</a>
-        <a href="{{route('email',['email' => $request->email])}}">{{$request->email}}</a>
+        @if(null!=($request->type) && null!=($request->email))
+          <a href="{{route($request->type,[
+              'request' => $request->id,
+              'id' => $request[$request->type]
+            ])}}">
+            {{$request->author}}
+          </a>
+          <a href="{{route('email',['email' => $request->email])}}">{{$request->email}}
+          </a>
+        @endif
       </div>
     </div>
   @endforeach
