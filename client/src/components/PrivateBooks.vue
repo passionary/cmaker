@@ -7,10 +7,10 @@
             <img src="/images/icons8-open-book-96.png">
           </div>
           <div class="card-content">
-            <h5>{{el.content.length * 2}} pages</h5>
+            <h5>{{el.content && el.content.length * 2}} pages</h5>
           </div>
           <div class="card-action">
-            <a href="" @click.prevent="$router.push({name:'book',params:{bk:{c:el.content,n:el.name}}})" class="text">{{el.name}}</a>
+            <a href="" @click.prevent="$router.push({name:'book',params:{bk:{book:el,request:el.request,user_id:user.id}}})" class="text">{{el.name}}</a>
             <a href="" @click.prevent="remove(el)" class="remove">&times;</a>
           </div>
         </div>

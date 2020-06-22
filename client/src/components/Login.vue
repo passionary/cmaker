@@ -49,7 +49,7 @@
 						M.toast({html: res.data.errors[0]})
 						return
 					}
-					document.cookie = `token=${res.data.token}; max-age=420`
+					document.cookie = `token=${res.data.token}`
 					M.toast({html: 'you are logged success'})
 					this.$router.push('/')
 				})

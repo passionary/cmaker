@@ -11,13 +11,13 @@
     <div class="bb-bookblock" v-if="books.length" id="bb-bookblock">
       <div class="bb-item" v-for="(el,index) in books" :style="{backgroundColor:el.name,zIndex:Math.abs(index - books.length)}" :ref="index" :key="index">        
         <p class="content left-content">
-          {{el[0] ? el[0].cont : ''}}
+          {{el['left'] && el['left'].content}}
         </p>
-        <p class="page">{{el[0] ? el[0].page : ''}}</p>
+        <p class="page">{{el['left'] && el['left'].order_id}}</p>
         <p class="content right-content">
-          {{el[1] ? el[1].cont : ''}}
+          {{el['right'] && el['right'].content}}
         </p>
-        <p class="page2">{{el[1] ? el[1].page : ''}}</p>
+        <p class="page2">{{el['right'] && el['right'].order_id}}</p>
       </div>
     </div>
     <h1 v-else class="text-center">No content</h1>      
@@ -101,8 +101,21 @@ export default {
   methods:{
     ...mapActions(['auth']),
     initialize(){
-      this.books = this.$route.params.bk.c;
-      console.log(this.books,this.$route.params.bk)
+      this.books = this.$route.params.bk.book.pages;
+      let pages = []
+      for(let i=0;i<this.books.length;i++) {
+        const b = this.books[i]
+        const b2 = this.books[i+1]
+        if(b2) {
+          pages.push({
+            'left': {...b},
+            'right': {...b2}
+          })
+          i++
+          continue
+        }
+      }
+      this.books = pages
     },
     submitHandler() {
       axios.post('http://127.0.0.1:8000/api/request',new FormData(form))
@@ -195,6 +208,7 @@ export default {
   async mounted(){
     await this.auth()    
     await this.initialize();
+    console.log(this.books)
     this.bookblock();
   }
 }

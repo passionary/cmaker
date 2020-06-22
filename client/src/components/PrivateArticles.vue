@@ -10,7 +10,7 @@
             <h5 class="">{{el.content.slice(0,15)}}</h5>
           </div>
           <div class="card-action">
-            <a href="" @click.prevent="$router.push({name:'article-edit',params:{art:{n:el.name,c:el.content}}})">{{el.name}}</a>
+            <a href="" @click.prevent="$router.push({name:'article-edit',params:{art:{article:el,request:el.request}}})">{{el.name}}</a>
             <a href="" @click.prevent="remove(el)" class="remove">&times;</a>
           </div>
         </div>
