@@ -15,12 +15,13 @@ class CreateBooksTable extends Migration
     {
         Schema::create('books', function (Blueprint $table) {
             $table->id();
-            $table->string('genre');
-            $table->string('name');
-            $table->string('size');
-            $table->smallInteger('count_of_pages');
-            $table->string('tags');
-            $table->smallInteger('request_id');
+            $table->string('genre')->nullable();
+            $table->string('name')->nullable();
+            $table->string('size')->nullable();
+            $table->smallInteger('count_of_pages')->nullable();
+            $table->string('tags')->nullable();
+            $table->smallInteger('user_id')->nullable();
+            $table->smallInteger('request_id')->nullable();
             $table->timestamps();
         });
     }

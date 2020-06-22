@@ -10,7 +10,6 @@ $factory->define(Request::class, function (Faker $faker) {
       'type' => '',
       'message' => $faker->text(10),
       'author' => $faker->text(5),
-      'user_id' => 1,
       'email' => 'mail@mail.ru',
   ];
 });

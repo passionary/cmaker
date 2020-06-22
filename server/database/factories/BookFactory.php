@@ -12,6 +12,7 @@ $factory->define(Book::class, function (Faker $faker) {
     'size' => rand(300,2000),
     'count_of_pages' => rand(100,1000),
     'tags' => $faker->text(30),
+    'user_id' => 1,
     'request_id' => 1
   ];
 });

@@ -11,6 +11,7 @@ $factory->define(Article::class, function (Faker $faker) {
     'name' => $faker->text(10),
     'content' => $faker->text(300),
     'tags' => $faker->text(30),
+    'user_id' => 1,
     'request_id' => 2,
   ];
 });

@@ -10,6 +10,7 @@ $factory->define(Video::class, function (Faker $faker) {
     'name' => $faker->text(10),
     'path' => 'videos/d6dKaYI1tScHM4jlVL3OPngERf5fTLlisJ01iSG3.mp4',
     'tags' => $faker->text(30),
+    'user_id' => 1,
     'request_id' => 3
   ];
 });

@@ -67,14 +67,16 @@ class ContentActions extends Action
 			$requestValid = \Validator::make($request['request'],$rules);
 			$itemValid = \Validator::make($request['item'],$rules2);
 			if($requestValid->fails() || $itemValid->fails()) return response()->json(['message' => 'invalid data'],400);
-			$req = \App\Request::create($request['request']);
-			$article = Article::create([
-				'subject' => $request['item']['subject'],
-				'name' => $request['item']['name'],
-				'content' => $request['item']['content'],
-				'tags' => $request['item']['tags'],
-				'request_id' => $req->id
-			]);
+			$article = Article::find($request->article_id);
+			foreach($request['item'] as $key => $value) {
+				$article[$key] = $value;
+				$article->save();
+			}	
+			$req = \App\Request::find($article->request_id);
+			foreach($request['request'] as $key => $value){
+				$req[$key] = $value;
+				$req->save();
+			}
 			return response()->json(['message' => 'your article was sent successfully'],200);
 		});
 		parent::__construct('video',function() use($request){

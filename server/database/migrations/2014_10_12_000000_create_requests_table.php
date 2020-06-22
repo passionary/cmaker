@@ -15,11 +15,10 @@ class CreateRequestsTable extends Migration
     {
         Schema::create('requests', function (Blueprint $table) {
             $table->id();
-            $table->string('type');            
-            $table->string('message');            
-            $table->string('author');            
-            $table->string('email');
-            $table->smallInteger('user_id');
+            $table->string('type')->nullable();
+            $table->string('message')->nullable();
+            $table->string('author')->nullable();
+            $table->string('email')->nullable();
             $table->timestamps();
         });
     }
