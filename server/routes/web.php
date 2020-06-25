@@ -19,7 +19,7 @@ Route::group(['middleware' => 'auth'],function() {
 	Route::get('/article/{request}/{id}', 'ArticleController@getArticle')->name('article');
 	Route::get('/email/{email}', 'RequestController@mail')->name('email');
 	Route::post('/send-email', 'RequestController@sendEmail')->name('send-email');
-	Route::get('/video/{request}/{id}', 'VideoController@getVideo')->name('video');
+	Route::get('/video/{request?}/{id?}', 'VideoController@getVideo')->name('video');
 });
 
 Auth::routes(['register' => false]);

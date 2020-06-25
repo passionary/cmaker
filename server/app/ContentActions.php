@@ -76,11 +76,15 @@ class ContentActions extends Action
 			];
 			$rules2 = [
 				'name' => 'required',
-				'tags' => 'required',							
-			];				
+				'tags' => 'required',
+			];
+			$errors = [];
 			$requestValid = \Validator::make($request['request'],$rules);
 			$itemValid = \Validator::make($request['item'],$rules2);
-			if($requestValid->fails() || $itemValid->fails()) return response()->json(['errors' => $itemValid->errors(),'errors2' => $requestValid->errors()]);			
+
+			if(!$request->file('file')) $errors[] = "file must to have value";
+
+			if($requestValid->fails() || $itemValid->fails() || !$request->file('file')) return response()->json(['errors' => $itemValid->errors(),'errors2' => $requestValid->errors(),'errors3' => $errors]);
 			if($request->has('video_id') && gettype((int) $request->video_id) === "integer" && (int) $request->video_id !== 0) {
 				$video = Video::find($request->video_id);
 				foreach($request['item'] as $key => $value) {
@@ -94,9 +98,9 @@ class ContentActions extends Action
 				}
 				return response()->json(['message' => 'your request was updated successfully','id' => $video->id],200);
 			}
-			try {
-				$req = \App\Request::create($request['request']);
+			try {				
 				$path = Storage::disk('public')->putFile('videos',$request->file('file'));
+				$req = \App\Request::create($request['request']);
 				$video = Video::create([
 					'name' => $request['item']['name'],				
 					'path' => $path,

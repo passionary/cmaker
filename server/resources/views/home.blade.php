@@ -17,7 +17,7 @@
         <h5 class="">{{$request->message}}</h5>
       </div>
       <div class="card-action">
-        @if(null!=($request->type) && null!=($request->email))
+        @if(null!=($request[$request->type]) && null!=($request->email))
           <a href="{{route($request->type,[
               'request' => $request->id,
               'id' => $request[$request->type]
