@@ -11,12 +11,22 @@
           </div>
           <div class="card-action">
             <a href="" @click.prevent="$router.push({name:'article-edit',params:{art:{article:el,request:el.request}}})">{{el.name}}</a>
-            <a href="" @click.prevent="remove(el.id)" class="remove">&times;</a>
+            <a class="remove modal-trigger" :href="'#modal' + el.id">&times;</a>
+            <div :id="'modal' + el.id" class="modal">
+              <div class="modal-content">
+                <h4>Are you sure ?</h4>
+                <p>You now deleting the {{el.name}} article(ID:{{el.id}})</p>
+              </div>
+              <div class="modal-footer">
+                <a href="#!" class="modal-close waves-effect waves-green btn-flat">CLOSE</a>
+                <a href="#!" class="modal-close waves-effect waves-green btn-flat" @click="remove(el.id)">DELETE</a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="no-content center-align" v-else><span>no articles</span></div>
+    <div class="no-content center-align" v-else><span>no articles</span></div>     
   </div>
 </template>
 
@@ -90,17 +100,13 @@ export default {
     .then(res => {
       this.articles = res.data
     })
-    // for(let i=0;i<Object.keys(localStorage).length;i++){
-    //   if (Object.keys(localStorage)[i] != 'loglevel:webpack-dev-server'){
-    //     const keys = Object.keys(localStorage)[i].split(',')
-    //     const vals = keys.map(e => e.split('='))
-    //     if(vals[0][1] == 'article')
-    //     this.articles.push({
-    //       name:vals[1][1],
-    //       content:localStorage.getItem(Object.keys(localStorage)[i])
-    //     })
-    //   }      
-    // }
+    .then(() => {
+      $(document).ready(function(){
+        $('.modal').modal({
+          dismissible:false
+        });
+      });
+    })    
   }
 }
 </script>

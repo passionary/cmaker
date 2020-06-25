@@ -1,11 +1,7 @@
 <template>
   <div class="bb-custom-wrapper">
-    <div class="green lighten-3" v-if="nmessage">
-      <p class="center-align white-text">{{nmessage}}</p>
-    </div>
-    <div v-else-if="error" class="materialize-red lighten-3">
-      <p class="center-align white-text">{{error}}</p>
-    </div>
+    <nmessage :nmessage="nmessage" />
+    <nerror :error="error" />
     <router-link :to="{name:'book-edit',params:{bk:$route.params.bk}}" class="edit"><i class="material-icons">edit</i><p>edit</p></router-link>
   	<h3 class="center-align">CONTENT</h3>
     <div class="bb-bookblock" v-if="books.length" id="bb-bookblock">

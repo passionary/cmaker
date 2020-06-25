@@ -2,12 +2,8 @@
   <div class="books" ref="books">
   	<button class="save btn cyan" @click="show">save</button>
     <router-link v-if="$route.params.bk" to="/self-books" class="text"><i class="material-icons">arrow_back</i></router-link>
-  	<div class="green lighten-3" v-if="nmessage">
-  		<p class="center-align white-text">{{nmessage}}</p>
-  	</div>
-    <div class="center-align materialize-red lighten-3" v-if="error">
-      <span class="white-text">{{error}}</span>
-    </div>
+  	<nmessage :nmessage="nmessage" />
+    <nerror :error="error" />
     <div class="input-field name-field">
       <input id="name" :value="$route.params.bk.n" type="text" class="validate" placeholder="Book name" v-if="$route.params.bk && $route.params.bk.n" disabled="true">
       <input v-model="name" type="text" id="name" class="validate" placeholder="Book name" v-else>
@@ -86,7 +82,6 @@ export default {
     name:'',
     created:[],
   	message:'',
-  	lev:false,
   	name:''  	  	
   }),
   computed: {
@@ -130,7 +125,7 @@ export default {
         return
       }
       if(!this.name) {
-        this.error = 'article must have a name'
+        this.setError('article must have a name')
         return
       }
       fetch('http://127.0.0.1:8000/api/create-book', {

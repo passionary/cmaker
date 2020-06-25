@@ -15,6 +15,8 @@ import store from './store'
 library.add(faSignOutAlt)
 
 Vue.component('font-awesome-icon',FontAwesomeIcon)
+Vue.component('nmessage',require('./components/Nmessage').default)
+Vue.component('nerror',require('./components/Nerror').default)
 
 Vue.use(ckeditor)
 

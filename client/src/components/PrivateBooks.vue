@@ -10,8 +10,18 @@
             <h5>{{el.pages.length}} pages</h5>
           </div>
           <div class="card-action">
-            <a href="" @click.prevent="$router.push({name:'book',params:{bk:{book:el,request:el.request}}})" class="text">{{el.name}}</a>
-            <a href="" @click.prevent="remove(el.id)" class="remove">&times;</a>
+            <a href="" @click.prevent="$router.push({name:'book',params:{bk:{book:el,request:el.request}}})" class="text">{{el.name}}</a>            
+            <a class="remove modal-trigger" :href="'#modal' + el.id">&times;</a>
+            <div :id="'modal' + el.id" class="modal">
+              <div class="modal-content">
+                <h4>Are you sure ?</h4>
+                <p>You now deleting the {{el.name}} book(ID:{{el.id}})</p>
+              </div>
+              <div class="modal-footer">
+                <a href="#!" class="modal-close waves-effect waves-green btn-flat">CLOSE</a>
+                <a href="#!" class="modal-close waves-effect waves-green btn-flat" @click="remove(el.id)">DELETE</a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -87,7 +97,7 @@ export default {
   },
   methods: {
     ...mapActions(['auth']),
-    remove(id) {
+    remove(id) {      
       axios.get(`http://127.0.0.1:8000/api/remove-book?book_id=${id}`)
       .then(res => {
         this.books.splice(this.books.findIndex(e => e.id === id),1)
@@ -99,7 +109,14 @@ export default {
     axios.get(`http://127.0.0.1:8000/api/requests?user_id=${this.user.id}&type=book`)
     .then(res => {
       this.books = res.data
-    })    
+    })
+    .then(() => {
+      $(document).ready(function(){
+        $('.modal').modal({
+          dismissible:false
+        });
+      });
+    })
   }
 }
 </script>

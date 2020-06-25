@@ -1,11 +1,7 @@
 <template>
   <div class="videos" ref="videos">
-    <div class="green lighten-3" v-if="nmessage">
-      <p class="center-align white-text">{{nmessage}}</p>
-    </div>
-    <div class="center-align materialize-red lighten-3" v-if="$store.state.error">
-      <span class="white-text">{{error}}</span>
-    </div>
+    <nmessage :nmessage="nmessage" />
+    <nerror :error="error" />
     <input type="text" name="item[name]" class="form-control" placeholder="name" v-model="name">
     <form id="form" enctype="multipart/form-data" action="http://127.0.0.1:8000/api/request" method="post" class="form-group mx-auto" @submit.prevent="submitHandler">
       <input type="hidden" name="request[type]" value="video">

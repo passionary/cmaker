@@ -1,11 +1,7 @@
 <template>
   <div class="container mt-3">
-    <div class="green lighten-3" v-if="nmessage">
-      <p class="center-align white-text">{{nmessage}}</p>
-    </div>
-    <div class="center-align materialize-red lighten-3" v-if="error">
-      <span class="white-text">{{error}}</span>
-    </div>
+    <nmessage :nmessage="nmessage" />
+    <nerror :error="error" />
     <button class="btn cyan save" @click="saveHandler">save</button>
     <input type="text" ref="name" name="item[name]" placeholder="name" v-model="name">
     <ckeditor v-model="content" :config="options" />
