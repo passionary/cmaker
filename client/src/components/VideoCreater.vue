@@ -60,8 +60,9 @@ export default {
       })
       .then(res => res.json())
       .then(res => {
-        if(res.errors || res.errors2) {
-          this.setError(Object.values(res.errors)[0] && Object.values(res.errors)[0][0] || Object.values(res.errors2)[0] && Object.values(res.errors2)[0][0])
+        console.log(res)
+        if(res.errors || res.errors2 || res.errors3) {
+          this.setError(Object.values(res.errors)[0] && Object.values(res.errors)[0][0] || Object.values(res.errors2)[0] && Object.values(res.errors2)[0][0] || res.errors3.length && res.errors3[0])
           return
         }
         this.setMessage(res.message || "")

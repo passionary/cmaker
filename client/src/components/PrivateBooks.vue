@@ -1,5 +1,7 @@
 <template>
-  <div class="books">    
+  <div class="books">
+    <nmessage :nmessage="nmessage" />
+    <nerror :error="error" />
     <div class="row" v-if="books.length">
       <div class="col s4 m4" v-for="(el,index) in books" :key="index">
         <div class="card">
@@ -82,24 +84,28 @@
 </style>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters, mapMutations } from 'vuex'
+
 export default {
   name: 'HelloWorld',
   data: () => ({
-    content: '',
-    index:0,
     books:[],
-    offset:0,
-    pages:[]
   }),
   computed: {
-    ...mapGetters(['user'])
+    ...mapGetters(['user','error','nmessage'])
   },
   methods: {
     ...mapActions(['auth']),
+    ...mapMutations(['setError','setMessage']),
     remove(id) {      
       axios.get(`http://127.0.0.1:8000/api/remove-book?book_id=${id}`)
       .then(res => {
+        console.log(res)
+        if(res.data.errors || res.data.errors2) {
+          this.setError(Object.values(res.data.errors)[0] || Object.values(res.data.errors2)[0])
+          return
+        }
+        this.setMessage(res.data.message || '')
         this.books.splice(this.books.findIndex(e => e.id === id),1)
       })
     }

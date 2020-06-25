@@ -1,5 +1,7 @@
 <template>
   <div class="articles">
+    <nmessage :nmessage="nmessage" />
+    <nerror :error="error" />
     <div class="row" v-if="articles.length">
       <div class="col s4 m4" v-for="(el,index) in articles" :key="index">
         <div class="card">
@@ -7,7 +9,7 @@
             <img src="/images/icons8-edit-file-80.png">
           </div>
           <div class="card-content">
-            <h5 class="">{{el.content.slice(0,15)}}</h5>
+            <h5 class="">{{el.content ? el.content.slice(0,15) : ""}}</h5>
           </div>
           <div class="card-action">
             <a href="" @click.prevent="$router.push({name:'article-edit',params:{art:{article:el,request:el.request}}})">{{el.name}}</a>
@@ -72,21 +74,18 @@
 </style>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters, mapMutations } from 'vuex'
 export default {
   name: 'HelloWorld',
   data: () => ({
-    content: '',
-    index:0,
     articles:[],
-    offset:0,
-    pages:[]
   }),
   computed: {
-    ...mapGetters(['user'])
+    ...mapGetters(['user','error','nmessage'])
   },
   methods: {
     ...mapActions(['auth']),
+    ...mapMutations(['setError','setMessage']),
     remove(id) {
       axios.get(`http://127.0.0.1:8000/api/remove-article?article_id=${id}`)
       .then(res => {

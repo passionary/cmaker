@@ -1,5 +1,7 @@
 <template>
   <div class="videos">
+    <nmessage :nmessage="nmessage" />
+    <nerror :error="error" />
     <div class="row" v-if="videos.length">
       <div class="col s4 m4" v-for="(el,index) in videos" :key="index">
         <div class="card small">
@@ -67,27 +69,30 @@
 </style>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters, mapMutations } from 'vuex'
+
 export default {
   name: 'HelloWorld',
   data: () => ({
-    content: '',
-    index:0,
     videos:[],
-    offset:0,
-    pages:[]
   }),   
   methods: {
     ...mapActions(['auth']),
+    ...mapMutations(['setError','setMessage']),
     remove(id) {
       axios.get(`http://127.0.0.1:8000/api/remove-video?video_id=${id}`)
       .then(res => {
+        if(res.data.errors || res.data.errors2) {
+          this.setError(Object.values(res.data.errors)[0] && Object.values(res.data.errors)[0][0] || Object.values(res.data.errors2)[0] && Object.values(res.data.errors2)[0][0])
+          return
+        }
+        this.setMessage(res.data.message || '')
         this.videos.splice(this.videos.findIndex(e => e.id === id),1)
       })
     }
   },
   computed: {
-    ...mapGetters(['user'])
+    ...mapGetters(['user','error','nmessage'])
   },
   async mounted(){
     await this.auth()

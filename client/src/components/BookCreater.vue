@@ -5,7 +5,7 @@
   	<nmessage :nmessage="nmessage" />
     <nerror :error="error" />
     <div class="input-field name-field">
-      <input id="name" :value="$route.params.bk.n" type="text" class="validate" placeholder="Book name" v-if="$route.params.bk && $route.params.bk.n" disabled="true">
+      <input id="name" :value="$route.params.bk.book.name" type="text" class="validate" placeholder="Book name" v-if="$route.params.bk && $route.params.bk.book" disabled="true">
       <input v-model="name" type="text" id="name" class="validate" placeholder="Book name" v-else>
     </div>  	
   	<div class="articles d-flex justify-content-between flex-wrap">
@@ -33,8 +33,8 @@
 	}
   .text {
     position: absolute;
-    left:16%;
-    top:3%;
+    left:18%;
+    top:2.4%;
   }
   .name-field {
     margin-top: 1.6rem !important;
@@ -125,7 +125,7 @@ export default {
         return
       }
       if(!this.name) {
-        this.setError('article must have a name')
+        this.setError('book must have a name')
         return
       }
       fetch('http://127.0.0.1:8000/api/create-book', {
