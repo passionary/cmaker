@@ -2,8 +2,8 @@
   <div class="books" ref="books">
   	<button class="save btn cyan" @click="show">save</button>
     <router-link v-if="$route.params.bk" to="/self-books" class="text"><i class="material-icons">arrow_back</i></router-link>
-  	<div class="green lighten-3" v-if="message">
-  		<p class="center-align white-text">{{message}}</p>
+  	<div class="green lighten-3" v-if="nmessage">
+  		<p class="center-align white-text">{{nmessage}}</p>
   	</div>
     <div class="center-align materialize-red lighten-3" v-if="error">
       <span class="white-text">{{error}}</span>
@@ -77,24 +77,24 @@
 </style>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters, mapMutations } from 'vuex'
 export default {
   name: 'HelloWorld',
   data:() => ({
   	bookData:[],
   	lastIndex:3,
     name:'',
-    error:'',
     created:[],
   	message:'',
   	lev:false,
   	name:''  	  	
   }),
   computed: {
-    ...mapGetters(['user'])
+    ...mapGetters(['user','error','nmessage'])
   },
   methods:{
-    ...mapActions(['auth']), 
+    ...mapActions(['auth']),
+    ...mapMutations(['setError','setMessage']),
   	addPages(){
       this.bookData.push({left:new Map(),right:new Map()})
   		setTimeout(() => {
@@ -121,6 +121,11 @@ export default {
         })
         .then(res => {
           console.log(res)
+          if(res.data.errors || res.data.errors2) {
+            this.setError(Object.values(res.data.errors)[0] && Object.values(res.data.errors)[0][0] || Object.values(res.data.errors2)[0] && Object.values(res.data.errors2)[0][0])
+            return
+          }
+          this.setMessage(res.data.message || "")
         })
         return
       }
@@ -140,13 +145,16 @@ export default {
         })
       })
       .then(res => res.json())
-      .then(data => {
-        console.log(data)
+      .then(res => {
+        console.log(res)
+        if(res.errors || res.errors2) {
+          this.setError(Object.values(res.errors)[0] && Object.values(res.errors)[0][0] || Object.values(res.errors2)[0] && Object.values(res.errors2)[0][0])
+          return
+        }
+        this.setMessage("your book created successfully")
         this.created[0] = true
-        this.created[1] = data.id
+        this.created[1] = res.id
       })      
-      if(sendData.length)
-      this.message = 'your book saved'
   	},
   	bookFuller(){
   		for(let i=0;i<3;i++){

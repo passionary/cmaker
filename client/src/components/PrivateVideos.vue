@@ -1,5 +1,5 @@
 <template>
-  <div class="videos h-75">
+  <div class="videos">
     <div class="row" v-if="videos.length">
       <div class="col s4 m4" v-for="(el,index) in videos" :key="index">
         <div class="card small">
@@ -21,6 +21,7 @@
   .videos{
     position: relative;
     padding: 0 20px 0 20px;
+    margin-top: 4rem;
   }
   .card-action {
     display: -webkit-flex;

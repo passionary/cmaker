@@ -118,14 +118,12 @@
 </style>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions, mapMutations } from 'vuex'
 
 export default {
   name: 'HelloWorld',
   data:() => ({
-    error:'',
     email:'',
-    nmessage:'',
     genre:'',
     size:'',
     tags:'',
@@ -134,10 +132,11 @@ export default {
     books:[],
   }),
   computed: {
-    ...mapGetters(['user'])
+    ...mapGetters(['user','error','nmessage'])
   },
   methods:{
     ...mapActions(['auth']),
+    ...mapMutations(['setError','setMessage']),
     initialize(){
       this.books = this.$route.params.bk.book.pages;
       let pages = []
@@ -160,14 +159,14 @@ export default {
         method: 'POST',        
         body: new FormData(form)
       })
-      .then(res => res.text())
-      .then(data => {
-        console.log(data)        
-      })
-      // axios.post('http://127.0.0.1:8000/api/request',new FormData(form))
-      // .then(res => {
-      //   this.nmessage = res.data.message
-      // })
+      .then(res => res.json())
+      .then(res => {
+        if(res.errors || res.errors2) {
+          this.setError(Object.values(res.errors)[0] && Object.values(res.errors)[0][0] || Object.values(res.errors2)[0] && Object.values(res.errors2)[0][0])
+          return
+        }
+        this.setMessage(res.message || "")
+      })      
     },
     bookblock(){
       var Page = (function() {

@@ -1,5 +1,5 @@
 <template>
-  <div class="articles h-75">
+  <div class="articles">
     <div class="row" v-if="articles.length">
       <div class="col s4 m4" v-for="(el,index) in articles" :key="index">
         <div class="card">
@@ -24,6 +24,7 @@
   .articles{
     position: relative;
     padding: 0 20px 0 20px;
+    margin-top: 4rem;
   }
   .card-action {
     display: -webkit-flex;
@@ -44,9 +45,9 @@
     margin-right: 0 !important;
   }
   .card-image img {
-    width: 50%;
+    width: 45%;
     margin: 0 auto;
-    margin-top: 64px;
+    padding-top: 50px;
   }
   .no-content {    
     margin: 0 auto;

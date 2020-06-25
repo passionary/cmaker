@@ -43,7 +43,7 @@
 </style>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters, mapMutations } from 'vuex'
 export default {
   name: 'HelloWorld',
   data:() => ({
@@ -53,20 +53,19 @@ export default {
     author:'',
     content:'',
     message:'',
-    error:'',
     created: [],
     email:'',
-    nmessage:'',
     options: {
       filebrowserUploadUrl: '/image.php',
       filebrowserUploadMethod: 'form'
     },
   }),
   computed: {
-    ...mapGetters(['user'])
+    ...mapGetters(['user','error','nmessage'])
   },
   methods:{
     ...mapActions(['auth']),
+    ...mapMutations(['setError','setMessage']),
   	saveHandler() {      
       if(this.$route.params.art || this.created[0]) {
         fetch('http://127.0.0.1:8000/api/save-article',{
@@ -81,12 +80,16 @@ export default {
         })
         .then(res => res.json())
         .then(res => {
-          console.log(res)
+          if(res.errors || res.errors2) {
+            this.setError(Object.values(res.errors)[0] && Object.values(res.errors)[0][0] || Object.values(res.errors2)[0] && Object.values(res.errors2)[0][0])
+            return
+          }
+          this.setMessage(res.message || "")
         })
         return
       }
       if(!this.name) {
-        this.error = 'article must have a name'
+        this.setError('article must have a name')
         return
       }
       axios.post('http://127.0.0.1:8000/api/create-article',{
@@ -96,6 +99,11 @@ export default {
       })
       .then(res => {
         console.log(res)
+        if(res.data.errors || res.data.errors2) {
+          this.setError(Object.values(res.data.errors)[0] && Object.values(res.data.errors)[0][0] || Object.values(res.data.errors2)[0] && Object.values(res.data.errors2)[0][0])
+          return
+        }
+        this.setMessage("your article created successfully")
         this.created[0] = true;
         this.created[1] = res.data.id
       })
@@ -104,7 +112,11 @@ export default {
     submitHandler() {
       axios.post('http://127.0.0.1:8000/api/request',new FormData(form))
       .then(res => {
-        console.log(res)
+        if(res.data.errors || res.data.errors2) {
+          this.setError(Object.values(res.data.errors)[0] && Object.values(res.data.errors)[0][0] || Object.values(res.data.errors2)[0] && Object.values(res.data.errors2)[0][0])
+          return
+        }
+        this.setMessage(res.data.message || "")
       })
     }
   },

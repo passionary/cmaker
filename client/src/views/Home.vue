@@ -3,6 +3,8 @@
 		<div class="row">			
 			<main class="col s9 m9">
 				<div class="logout" @click="logout">
+
+					<p>{{user.username}}</p>
 					<font-awesome-icon icon="sign-out-alt" />
 				</div>				
 				<div class="title">
@@ -53,12 +55,26 @@
 </template>
 <style scoped>
 	.logout {
+		display: -webkit-flex;
+		display: -moz-flex;
+		display: -ms-flex;
+		display: -o-flex;
+		display: flex;
+		justify-content: space-between;
 		position: absolute;
 		right:25px;
 		z-index: 100;
+		min-width: 72px;
 		cursor: pointer;
 		top: 18px;
-	}	
+		border-bottom: 1px solid rgba(0,0,0,0.17);
+	}
+	.logout p{
+		margin: 0 0 5px 0;
+		margin-top: -4px;
+		font-family: AlegreyaSans-Thin;
+		font-size: 19px;
+	}
 	.fa-sign-out-alt {
 		color: #00bcd4;
 		vertical-align: baseline;
