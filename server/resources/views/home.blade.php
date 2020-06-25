@@ -3,12 +3,12 @@
 @section('content')
 <div class="container d-flex justify-content-between flex-wrap">
   @foreach($requests as $request)
-    <div class="card request medium">
+    <div class="card request medium" style="min-width: 290px;">
       <div class="card-image">
         @if($request->type === 'book')
           <img src="/images/icons8-open-book-96.png">
         @elseif($request->type === 'article')
-          <img src="/images/icons8-edit-file-80.png">
+          <img src="/images/icons8-edit-file-80.png" style="margin-top:25px;width: 60% !important;">
         @elseif($request->type === 'video')
           <img src="/images/icons8-video-gallery-96.png">
         @endif

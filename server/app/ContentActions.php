@@ -80,8 +80,8 @@ class ContentActions extends Action
 			];				
 			$requestValid = \Validator::make($request['request'],$rules);
 			$itemValid = \Validator::make($request['item'],$rules2);
-			if($requestValid->fails() || $itemValid->fails()) return response()->json(['errors' => $itemValid->errors(),'errors2' => $requestValid->errors()]);
-			if($request->video_id && isset($request->video_id) && $request->video_id !== "false" && strlen($request->video_id) >= 1) {
+			if($requestValid->fails() || $itemValid->fails()) return response()->json(['errors' => $itemValid->errors(),'errors2' => $requestValid->errors()]);			
+			if($request->has('video_id') && gettype((int) $request->video_id) === "integer" && (int) $request->video_id !== 0) {
 				$video = Video::find($request->video_id);
 				foreach($request['item'] as $key => $value) {
 					$video[$key] = $value;
@@ -94,16 +94,21 @@ class ContentActions extends Action
 				}
 				return response()->json(['message' => 'your request was updated successfully','id' => $video->id],200);
 			}
-			$req = \App\Request::create($request['request']);
-			$path = Storage::disk('public')->putFile('videos',$request->file('file'));
-			$video = Video::create([
-				'name' => $request['item']['name'],				
-				'path' => $path,
-				'user_id' => $request->user_id,
-				'tags' => $request['item']['tags'],
-				'request_id' => $req->id
-			]);
-			return response()->json(['message' => 'your video was sent successfully','id' => $video->id],200);
+			try {
+				$req = \App\Request::create($request['request']);
+				$path = Storage::disk('public')->putFile('videos',$request->file('file'));
+				$video = Video::create([
+					'name' => $request['item']['name'],				
+					'path' => $path,
+					'user_id' => $request->user_id,
+					'tags' => $request['item']['tags'],
+					'request_id' => $req->id
+				]);
+				return response()->json(['message' => 'your video was sent successfully','id' => $video->id],200);
+			}catch(Exception $e) {
+				return response()->json(['errors' => [$e->getMessage()]]);
+			}
+			
 		});
 		$this->contentActions = $this->actions;
 	}

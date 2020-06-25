@@ -123,8 +123,13 @@ dl {
   margin-top: 0;
   margin-bottom: 1rem;
 }
-.request {
-  width: 300px;
+.card-image img {
+  width: 72% !important;  
+  margin: 0 auto;
+}
+.card {
+  opacity: 0.9;
+  max-height: 360px;
 }
 ol ol,
 ul ul,
