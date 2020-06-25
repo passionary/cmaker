@@ -6,8 +6,8 @@
     <div v-else-if="error" class="materialize-red lighten-3">
       <p class="center-align white-text">{{error}}</p>
     </div>
-    <router-link :to="{name:'book-edit',params:{bk:$route.params.bk}}">edit book</router-link>
-  	<h3 class="center-align">Content</h3>
+    <router-link :to="{name:'book-edit',params:{bk:$route.params.bk}}" class="edit"><i class="material-icons">edit</i><p>edit</p></router-link>
+  	<h3 class="center-align">CONTENT</h3>
     <div class="bb-bookblock" v-if="books.length" id="bb-bookblock">
       <div class="bb-item" v-for="(el,index) in books" :style="{backgroundColor:el.name,zIndex:Math.abs(index - books.length)}" :ref="index" :key="index">        
         <p class="content left-content">
@@ -47,12 +47,50 @@
 <style scoped>  
   .content{
     position: absolute;
+    padding: 0 20px 0 20px;
+  }
+  .edit {
+    position: absolute;
+    left:1%;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    justify-content: space-between;
+    min-width: 68px;
+    top: 25px;
+  }
+  .edit p {
+    text-transform: uppercase;
+    margin-top: -1px;
+    font-size: 16px;
+    letter-spacing: 2px;
+    font-family: TitilliumWeb-LightItalic;
+  }
+  .edit i {
+    font-size: 20px;
+  }
+  .bb-custom-wrapper nav a {
+    background: #00bcd4;
+  }
+  h3 {
+    margin-top: 2rem;
+  }
+  form {
+    margin-top: 3rem;
   }
   .bb-custom-wrapper {
     min-height: 100vh;
+    width:80%;
+  }
+  .send {
+    margin-top: 20px;
   }
   #bb-bookblock {
-    height: 100vh;
+    height: 73vh;
+    margin-top: 2.5rem;
+    width: 100%;
   }
   .left-content{
     width: 48%;
@@ -61,6 +99,7 @@
   nav {
     background: none;
     box-shadow: none;
+    margin-top: 3rem;
   }
   .right-content{
     width: 48%;

@@ -1,13 +1,14 @@
 <template>
   <div class="books" ref="books">
   	<button class="save btn cyan" @click="show">save</button>
+    <router-link v-if="$route.params.bk" to="/self-books" class="text"><i class="material-icons">arrow_back</i></router-link>
   	<div class="green lighten-3" v-if="message">
   		<p class="center-align white-text">{{message}}</p>
   	</div>
     <div class="center-align materialize-red lighten-3" v-if="error">
       <span class="white-text">{{error}}</span>
     </div>
-    <div class="input-field">
+    <div class="input-field name-field">
       <input id="name" :value="$route.params.bk.n" type="text" class="validate" placeholder="Book name" v-if="$route.params.bk && $route.params.bk.n" disabled="true">
       <input v-model="name" type="text" id="name" class="validate" placeholder="Book name" v-else>
     </div>  	
@@ -34,6 +35,14 @@
     margin-bottom: 40px;
     left:80%;
 	}
+  .text {
+    position: absolute;
+    left:16%;
+    top:3%;
+  }
+  .name-field {
+    margin-top: 1.6rem !important;
+  }
   .input-field {
     width: 89%;
     margin: 0 auto;

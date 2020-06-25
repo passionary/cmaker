@@ -67,14 +67,19 @@ export default {
   },
   methods:{
     ...mapActions(['auth']),
-  	saveHandler() {
-      // localStorage.setItem(`type=article,name=${this.name}`,this.model)
+  	saveHandler() {      
       if(this.$route.params.art || this.created[0]) {
-        console.log(this.created)
-        axios.post('http://127.0.0.1:8000/api/save-article',{
-          id: this.created[0] ? this.created[1] : this.$route.params.art.article.id,
-          content: this.content
+        fetch('http://127.0.0.1:8000/api/save-article',{
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+          },
+          body:JSON.stringify({
+            id: this.created[0] ? this.created[1] : this.$route.params.art.article.id,
+            content: this.content
+          })
         })
+        .then(res => res.json())
         .then(res => {
           console.log(res)
         })

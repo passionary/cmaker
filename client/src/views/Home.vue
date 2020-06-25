@@ -3,7 +3,6 @@
 		<div class="row">			
 			<main class="col s9 m9">
 				<div class="logout" @click="logout">
-					<span>sign out</span>
 					<font-awesome-icon icon="sign-out-alt" />
 				</div>				
 				<div class="title">
@@ -55,23 +54,13 @@
 <style scoped>
 	.logout {
 		position: absolute;
-		right:18px;
+		right:25px;
 		z-index: 100;
 		cursor: pointer;
-		top: 15px;
-	}
-	.logout > span {
-		border-bottom: 1px solid rgba(0,0,0,0.2);
-		margin-right: 7px;
-		font-size: 14px;
-		letter-spacing: 1px;
-		vertical-align: top;		
-		text-transform: uppercase;
-		font-family: AlegreyaSans-Thin;
-		font-weight: bold;
-	}
+		top: 18px;
+	}	
 	.fa-sign-out-alt {
-		color: #d76b6b;
+		color: #00bcd4;
 		vertical-align: baseline;
 		font-size: 21px;		
 	}
@@ -297,6 +286,18 @@
 	@media screen and (max-width: 1200px) {
 		.full-desc span {
 			font-size: 15px;
+		}
+		.desc {
+			width: 20%;
+		}
+		.top-side {
+			width: 80%;
+		}
+		.top-side span {
+			left: 20%;			
+		}
+		.desc span {
+			display: none;
 		}
 		.hiddler {
 			bottom:-4%;

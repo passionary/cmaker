@@ -2,7 +2,7 @@
   <div class="books">    
     <div class="row" v-if="books.length">
       <div class="col s4 m4" v-for="(el,index) in books" :key="index">
-        <div class="card medium">
+        <div class="card">
           <div class="card-image">
             <img src="/images/icons8-open-book-96.png">
           </div>
@@ -98,18 +98,7 @@ export default {
     axios.get(`http://127.0.0.1:8000/api/requests?user_id=${this.user.id}&type=book`)
     .then(res => {
       this.books = res.data
-    })
-    // for(let i=0;i<Object.keys(localStorage).length;i++){
-    //   if (Object.keys(localStorage)[i] != 'loglevel:webpack-dev-server'){
-    //     const keys = Object.keys(localStorage)[i].split(',')
-    //     const vals = keys.map(e => e.split('='))
-    //     if(vals[0][1] == 'book')
-    //     this.books.push({
-    //       name:vals[1][1],
-    //       content:JSON.parse(localStorage.getItem(Object.keys(localStorage)[i]))
-    //     })
-    //   }
-    // }
+    })    
   }
 }
 </script>

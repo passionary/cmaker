@@ -54,6 +54,7 @@
 					this.$router.push('/')
 				})
 				.catch(e => {
+					console.log(e.message)
 					M.toast({html: e.message})
 				})
 			}

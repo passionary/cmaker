@@ -2,7 +2,7 @@
   <div class="articles h-75">
     <div class="row" v-if="articles.length">
       <div class="col s4 m4" v-for="(el,index) in articles" :key="index">
-        <div class="card medium">
+        <div class="card">
           <div class="card-image">
             <img src="/images/icons8-edit-file-80.png">
           </div>
