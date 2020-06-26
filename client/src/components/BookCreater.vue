@@ -11,7 +11,7 @@
   	<div class="articles d-flex justify-content-between flex-wrap">
   		<div class="article" v-for="(list,index) in bookData" ref="article">
         <div class="input-field">
-          <textarea v-if="$route.params.bk && $route.params.bk.book" id="first" class="materialize-textarea" :name="index" placeholder="left page" @change="save($event)" :value="list.left.get ? list.left.get('content') : ''"></textarea>
+          <textarea v-if="$route.params.bk && $route.params.bk.book" id="first" class="materialize-textarea" :name="index" placeholder="left page" @change="save($event)" :value="list.left.get('content') ? list.left.get('content') : ''"></textarea>
           <textarea id="first" class="materialize-textarea" :name="index" placeholder="left page" @change="save($event)" v-else></textarea>
         </div>
         <div class="input-field">
@@ -78,10 +78,8 @@ export default {
   name: 'HelloWorld',
   data:() => ({
   	bookData:[],
-  	lastIndex:3,
     name:'',
     created:[],
-  	message:'',
   	name:''  	  	
   }),
   computed: {
@@ -161,9 +159,8 @@ export default {
     await this.auth()
     if(this.$route.params.bk) {
       this.name = this.$route.params.bk.book.name;
-      this.bookData = this.$route.params.bk.book.pages.map((e,i) => new Map(
-        Object.entries(e))
-      )
+      this.bookData = this.$route.params.bk.book.pages
+      .map((e,i) => new Map(Object.entries(e)))
       let pages = []
       for(let i=0;i<this.bookData.length;i++) {
         const b = this.bookData[i]
@@ -178,7 +175,6 @@ export default {
         }
       }
       this.bookData = pages
-      // console.log(this.bookData)
       setTimeout(() => {
         this.$refs.article.forEach(e => e.classList.add('appearing'))
       },100)
