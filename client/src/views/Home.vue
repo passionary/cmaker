@@ -1,54 +1,37 @@
 <template>
   <div class="root">  	
 		<div class="row">			
-			<main class="col s9 m9">
-				<div class="logout" @click="logout">
-
-					<p>{{user.username}}</p>
-					<font-awesome-icon icon="sign-out-alt" />
-				</div>				
+			<main class="col s12 m12">
 				<div class="title">
 					<p class="center-align"></p>					
 				</div>
 	  		<router-view />
   		</main>
-  		<div class="nav-container col s3">
-	  		<nav class="nav-wrapper">
-	  			<div class="top-wrapper">
-	  				<span class="top-side">
-		  				<span>
-		  					<span><b>C</b>maker</span>
-		  				</span>  				
-		  			</span>
-		  			<div class="desc" @click="show($event)">
-		  				<span>app for content making</span>
-		  				<i class="material-icons">info_outline</i>
-		  			</div>	  			
-	  			</div>  			
-	  			<div class="full-desc" @click="hide($event)">
-	  				<span class="">
-							<i class="material-icons hiddler">
-								done
-							</i> 						
-						</span>
-	  				<h5 class="center-align">  					
-	  					Description
-	  					<i class="material-icons">terrain</i>
-	  				</h5>
-	  				<span>
-							This is a application for content making.
-							What a content you want make?
-							It may be: <span>books,</span> <span>articles</span> and <span>video</span>.						
-	  				</span>
-	  			</div>  			
-	  			<ul id="nav-mobile" class="center">
-	  				<li v-for="item in navItems" :class="{'active':item.path == $route.path}">
-	  					<router-link tag="a" :to="item.path">
-		  					{{item.name}}
-		  				</router-link>
-	  				</li>
-	  			</ul>  			
-	  		</nav>
+  		<div class="nav-container">
+				<svg width="125" height="260" viewBox="0 0 125 260" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+				<g clip-path="url(#clip0_23_19)">
+				<ellipse rx="113.687" ry="129.592" transform="matrix(0.995094 0.098933 -0.0889945 0.996032 10.0161 130.089)" fill="#E5E7F0" fill-opacity="0.29"/>
+				<path d="M122.648 141.286C116.297 212.362 60.6731 264.846 -1.47231 258.668C-63.6177 252.489 -108.966 189.966 -102.615 118.891C-96.2647 47.815 -40.6408 -4.66938 21.5046 1.50916C83.65 7.6877 128.998 70.2107 122.648 141.286Z" stroke="#3A3A3A" stroke-opacity="0.15"/>
+				<g filter="url(#filter0_d_23_19)">
+				<ellipse cx="45.6229" cy="202.775" rx="29.9041" ry="31.1003" transform="rotate(3.47125 45.6229 202.775)" fill="white"/>
+				</g>
+				<g filter="url(#filter1_d_23_19)">
+				<circle cx="81.4497" cy="128.976" r="30.9394" transform="rotate(3.47125 81.4497 128.976)" fill="white"/>
+				</g>
+				<g filter="url(#filter2_d_23_19)">
+				<circle cx="43.6213" cy="54.2976" r="31.9493" transform="rotate(3.47125 43.6213 54.2976)" fill="white"/>
+				</g>
+				<rect x="27.7037" y="38.1603" width="33.2273" height="33.2273" transform="rotate(2.14563 27.7037 38.1603)" fill="url(#pattern0)"/>
+				<rect x="63.2252" y="108.504" width="37.1272" height="37.1272" transform="rotate(3.47125 63.2252 108.504)" fill="url(#pattern1)"/>
+				<rect x="26.5918" y="184.252" width="35.8849" height="35.8849" transform="rotate(0.666888 26.5918 184.252)" fill="url(#pattern2)"/>
+				<circle cx="0.5" cy="129.5" r="27.5" fill="#FDFDFD"/>
+				<circle cx="0.5" cy="129.5" r="27" stroke="#3A3A3A" stroke-opacity="0.15"/>
+				</g>
+				</svg>
+							
+				<router-link tag="div" to="/self-articles" class="nav-articles" />
+				<router-link tag="div" to="/self-books" class="nav-books" />
+				<router-link tag="div" to="/self-videos" class="nav-videos" />
   		</div>
 		</div>  	
   </div>	
@@ -68,6 +51,82 @@
 		cursor: pointer;
 		top: 18px;
 		border-bottom: 1px solid rgba(0,0,0,0.17);
+	}
+	.nav-articles {
+		position: absolute;
+		left: 9px;
+		transition: transform .4s ease;
+		top: 26px;
+		width: 64px;
+		height: 64px;
+		cursor: pointer;
+		border-radius: 50%;
+		background: #FFFFFF;
+		/* border: 2px solid #F0F0F0; */
+		box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
+		text-align: center;
+	}
+	.nav-articles::after {
+		content: '';
+		display: inline-block;
+		margin-top: 12px;
+		width: 40px;
+		height: 40px;
+		background: url(/images/nav-article.jpg) no-repeat;
+		background-size: 100% 100%;
+		background-position: center;
+	}
+	.nav-books {
+		transition: transform .4s ease;
+		position: absolute;
+		left: 48px;
+		top: 97px;
+		width: 64px;
+		cursor: pointer;
+		height: 64px;
+		border-radius: 50%;
+		background: #FFFFFF;
+		/* border: 2px solid #F0F0F0; */
+		box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
+		text-align: center;
+	}
+	.nav-books::after {
+		content: '';
+		display: inline-block;
+		margin-top: 16px;
+		width: 34px;
+		height: 34px;
+		background: url(/images/nav-book.jfif) no-repeat;
+		background-size: cover;
+		background-position: center;
+	}
+	.nav-videos {
+		transition: transform .4s ease;
+		cursor: pointer;
+		position: absolute;
+		left: 9px;
+		top: 167px;
+		width: 64px;
+		height: 64px;
+		border-radius: 50%;
+		background: #FFFFFF;
+		/* border: 2px solid #F0F0F0; */
+		box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
+		text-align: center;
+	}
+	.nav-books:hover, .nav-videos:hover, .nav-articles:hover {
+		box-shadow: 0px 0px 3px #73a2d1;
+		transform: scale(1.1, 1.1);
+	}
+	.nav-videos::after {
+		content: '';
+		display: inline-block;
+		margin-top: 12px;
+		width: 40px;
+		height: 40px;
+		background: url(/images/nav-video.jpg) no-repeat;
+		background-size: cover;
+		background-position: center;
 	}
 	.logout p{
 		margin: 0 0 5px 0;
@@ -125,7 +184,8 @@
 	}	
 	.nav-container {
 		position: fixed;
-		right: 0 !important;
+		left: 0 !important;
+		top: 34%;
 	}
 	.desc > span {
 		position: absolute;
@@ -473,11 +533,12 @@ export default {
   	show(e){
   		if(parseInt($('#nav-mobile').css('top')) < 1000){
   			$('.top-wrapper').hide();
+				$('#nav-mobile').animate({height:'464.5px'})
+				$('#nav-mobile li a').animate({paddingTop:'7.5%'})
   			$('#nav-mobile').animate({
 	  			top: '+=139'
 	  		},700,'linear',function(){
-	  			$('#nav-mobile').animate({height:'464.5px'})
-	  			$('#nav-mobile li a').animate({paddingTop:'7.5%'})
+	  			
 	  		})
   		}  		
   	}

@@ -1,6 +1,19 @@
 <template>
   <div class="books">
-    <h4 class="center-align title">Choose a Content Type<div class="i-back"><i class="material-icons">mode_edit</i></div></h4>
+    <div class="header">
+      <div class="navigation">
+        <span><router-link to="/">Home</router-link></span>
+        <span>|</span>
+        <span><router-link to="/about">About app</router-link></span>
+      </div>
+      <div class="title">
+        <h2>Content Maker</h2>
+      </div>
+      <div class="logout" @click="logout">
+        <span>{{user.username}}</span>
+        <div class="logout-icon"></div>
+      </div>
+    </div>
     <div class="center-block">
       <router-link :to="obj.path" v-for="obj in paths" :key="obj.name">
         <div class="item" :class="obj.name">
@@ -12,9 +25,36 @@
 </template>
 
 <style scoped>
+  .header {
+    display: flex;
+    justify-content: space-between;
+  }
+  .navigation {
+    padding: 40px 0 0 60px;
+  }
+  .navigation span {
+    margin-right: 15px;
+  }
+  .title {
+    font-style: italic;
+    font-weight: 100;
+  }
+  .logout {
+    display: flex;
+    padding: 40px 40px 0 0;
+  }
+  .logout span {
+    font-style: italic;
+    margin-right: 16px;
+  }
+  .logout-icon {
+    width: 20px;
+    height: 20px;
+    background: url(/images/logout.png) no-repeat;
+    background-size: cover;
+  }
   .item img{
     width: 34%;
-    padding-top: 30.2%;
   }
   .i-back {
     margin-top: 9px;
@@ -24,29 +64,6 @@
     margin-left: 9px;
     border-radius: 50%;
   }
-  .title {
-    position: absolute;
-    display: -webkit-flex;
-    display: -moz-flex;
-    display: -ms-flex;
-    display: -o-flex;
-    display: flex;
-    border-bottom: 1px solid rgba(0,0,0,0.1);
-    font-size:32px;
-    z-index: 100;
-    left:36px;
-    padding-bottom: 4px;
-    top:24px;
-    font-family: TitilliumWeb-LightItalic;
-  }
-  .title i {
-    font-size: 14px;
-    color: #fff;
-    padding-left: 6px;
-    margin-left: -4px;
-    display: block;
-    margin-top: 2px;    
-  }
   a{
     color: #000 !important;
   } 
@@ -54,8 +71,8 @@
     -webkit-transition: all .7s;
     -o-transition: all .7s;
     transition: all .7s;
-    width: 215px;
-    height: 215px;
+    width: 245px;
+    height: 245px;
     text-align: center;
     box-shadow: 0 0 4px grey;
     border-radius: 50%;
@@ -71,15 +88,17 @@
     top:163px;
   }
   .video img {
-    width: 39%;
+    width: 59%;
+    padding-top: 50px;
   }
   .book {
-    left:39.4%;
+    left:41.7%;
     top:208px;
   }
   .book img {
-    padding-top: 34%;
-    width: 31.5%;
+    padding-top: 28%;
+    padding-left: 15px;
+    width: 63.5%;
   }
   .wallpaper {
     left:11.84%;
@@ -87,6 +106,8 @@
   }
   .wallpaper img {
     margin-left: -4px;
+    width: 50%;
+    padding-top: 26%;
   }
   .center-block{
     width: 100%;
@@ -180,16 +201,37 @@
 </style>
 
 <script>
+import { mapActions, mapGetters } from 'vuex'
+import { getCookie,deleteCookie } from '@/modules'
+
 export default {
   name: 'HelloWorld',
   data: () => ({
     paths:[
-      {name:'CREATE BOOK',path:'/book/create',icon:'/images/icons8-book-52.png',name:'book'},
-      {name:'CREATE ARTICLE',path:'/article/create',icon:'/images/icons8-edit-file-96.png',name:'wallpaper'},
-      {name:'CREATE VIDEO',path:'/video/create',icon:'/images/icons8-video-message-200.png',name:'video'},
+      {name:'CREATE BOOK',path:'/book/create',icon:'/images/create-book.jfif',name:'book'},
+      {name:'CREATE ARTICLE',path:'/article/create',icon:'/images/create-article.jfif',name:'wallpaper'},
+      {name:'CREATE VIDEO',path:'/video/create',icon:'/images/create-video.png',name:'video'},
     ]
   }),   
-    
+  computed: {
+    ...mapGetters(['user'])
+  },
+  methods: {
+    ...mapActions(['auth']),
+    logout() {
+  		const token = getCookie('token')
+
+  		fetch(`http://127.0.0.1:8000/api/logout?token=${token}`)
+  		.then(res => res.json())
+  		.then(res => {
+  			M.toast({html: res.message})
+  		})
+  		.then(() => {
+  			deleteCookie('token')
+  			this.$router.push('/login')
+  		})
+  	},
+  },
   mounted(){  
     
   }
