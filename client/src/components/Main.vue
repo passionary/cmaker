@@ -1,19 +1,5 @@
 <template>
   <div class="books">
-    <div class="header">
-      <div class="navigation">
-        <span><router-link to="/">Home</router-link></span>
-        <span>|</span>
-        <span><router-link to="/about">About app</router-link></span>
-      </div>
-      <div class="title">
-        <h2>Content Maker</h2>
-      </div>
-      <div class="logout" @click="logout">
-        <span>{{user.username}}</span>
-        <div class="logout-icon"></div>
-      </div>
-    </div>
     <div class="center-block">
       <router-link :to="obj.path" v-for="obj in paths" :key="obj.name">
         <div class="item" :class="obj.name">
@@ -25,34 +11,6 @@
 </template>
 
 <style scoped>
-  .header {
-    display: flex;
-    justify-content: space-between;
-  }
-  .navigation {
-    padding: 40px 0 0 60px;
-  }
-  .navigation span {
-    margin-right: 15px;
-  }
-  .title {
-    font-style: italic;
-    font-weight: 100;
-  }
-  .logout {
-    display: flex;
-    padding: 40px 40px 0 0;
-  }
-  .logout span {
-    font-style: italic;
-    margin-right: 16px;
-  }
-  .logout-icon {
-    width: 20px;
-    height: 20px;
-    background: url(/images/logout.png) no-repeat;
-    background-size: cover;
-  }
   .item img{
     width: 34%;
   }
@@ -74,13 +32,11 @@
     width: 245px;
     height: 245px;
     text-align: center;
-    box-shadow: 0 0 4px grey;
     border-radius: 50%;
     position: absolute;
     cursor: pointer;
   }
   a:hover .item {
-    box-shadow: 0 0 4px red;
     transform: scale(1.1,1.1);
   }
   .video{

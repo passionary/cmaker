@@ -1,9 +1,20 @@
 <template>
-  <div class="root">  	
-		<div class="row">			
+  <div class="root"> 	
+		<div class="row">
 			<main class="col s12 m12">
-				<div class="title">
-					<p class="center-align"></p>					
+				<div class="header">
+					<div class="navigation">
+						<span><router-link to="/">Home</router-link></span>
+						<span class="delimiter">|</span>
+						<span><router-link to="/about">About app</router-link></span>
+					</div>
+					<div class="title">
+						<h2>Content Maker</h2>
+					</div>
+					<div class="logout">
+						<span>{{user.username}}</span>
+						<div @click="logout" class="logout-icon"></div>
+					</div>
 				</div>
 	  		<router-view />
   		</main>
@@ -37,21 +48,48 @@
   </div>	
 </template>
 <style scoped>
-	.logout {
-		display: -webkit-flex;
-		display: -moz-flex;
-		display: -ms-flex;
-		display: -o-flex;
-		display: flex;
-		justify-content: space-between;
-		position: absolute;
-		right:25px;
-		z-index: 100;
-		min-width: 72px;
-		cursor: pointer;
-		top: 18px;
-		border-bottom: 1px solid rgba(0,0,0,0.17);
+	.header {
+    display: flex;
+    justify-content: space-between;
+  }
+  .navigation {
+    font-family: GroteskThin;
+    padding: 40px 0 0 60px;
+  }
+  .navigation span {
+    font-size: 28px;
+    margin-right: 35px;
+  }
+	.navigation a {
+		color: #555;
 	}
+	.navigation .delimiter {
+		font-size: 23px;
+	}
+  .title {
+    font-family: Brich;
+    font-style: italic;
+    font-weight: 100;
+    margin-right: 90px;
+  }
+	.title h2 {
+		font-size: 36px;
+	}
+  .logout {
+    display: flex;
+    padding: 40px 40px 0 0;
+  }
+  .logout span {
+    font-style: italic;
+    margin-right: 38px;
+  }
+  .logout-icon {
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    background: url(/images/logout.png) no-repeat;
+    background-size: cover;
+  }
 	.nav-articles {
 		position: absolute;
 		left: 9px;
@@ -127,17 +165,6 @@
 		background: url(/images/nav-video.jpg) no-repeat;
 		background-size: cover;
 		background-position: center;
-	}
-	.logout p{
-		margin: 0 0 5px 0;
-		margin-top: -4px;
-		font-family: AlegreyaSans-Thin;
-		font-size: 19px;
-	}
-	.fa-sign-out-alt {
-		color: #00bcd4;
-		vertical-align: baseline;
-		font-size: 21px;		
 	}
 	.top-side {
 		display: -webkit-flex;
@@ -270,14 +297,6 @@
 		height: 0;		
 		font-size: 15px;
 		opacity: 0.6;
-	}		
-	.title {
-		width: 60%;
-		margin: 0 auto;
-		font-family: VarelaRound-Regular;
-	}
-	.title i {
-		border-bottom: 1px solid #000;
 	}
 	.active {
 		border-top: 1px solid rgba(0,0,0,0.1) !important;

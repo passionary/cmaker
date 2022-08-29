@@ -7,14 +7,17 @@ import ckeditor from 'ckeditor4-vue'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-
+import 'vue-glide-js/dist/vue-glide.css'
+import VueGlide from 'vue-glide-js'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import List from '@/components/List';
 
 library.add(faSignOutAlt)
-
+Vue.use(VueGlide)
 Vue.component('font-awesome-icon',FontAwesomeIcon)
+Vue.component('List',List)
 Vue.component('nmessage',require('./components/Nmessage').default)
 Vue.component('nerror',require('./components/Nerror').default)
 

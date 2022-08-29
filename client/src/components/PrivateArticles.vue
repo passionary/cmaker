@@ -2,7 +2,8 @@
   <div class="articles">
     <nmessage :nmessage="nmessage" />
     <nerror :error="error" />
-    <div class="row" v-if="articles.length">
+    <Loader class="no-content center-align" v-if="loading" />
+    <div class="row" v-else>
       <div class="col s4 m4" v-for="(el,index) in articles" :key="index">
         <div class="card">
           <div class="card-image">
@@ -28,7 +29,6 @@
         </div>
       </div>
     </div>
-    <div class="no-content center-align" v-else><span>no articles</span></div>     
   </div>
 </template>
 
@@ -74,11 +74,16 @@
 </style>
 
 <script>
+import Loader from './Loader';
 import { mapActions, mapGetters, mapMutations } from 'vuex'
 export default {
   name: 'HelloWorld',
+  components: {
+    Loader
+  },
   data: () => ({
     articles:[],
+    loading: false
   }),
   computed: {
     ...mapGetters(['user','error','nmessage'])
@@ -94,10 +99,13 @@ export default {
     }
   },
   async mounted(){
+    this.loading = true;
+
     await this.auth()
     axios.get(`http://127.0.0.1:8000/api/requests?user_id=${this.user.id}&type=article`)
     .then(res => {
-      this.articles = res.data
+      this.articles = res.data;
+      this.loading = false;
     })
     .then(() => {
       $(document).ready(function(){

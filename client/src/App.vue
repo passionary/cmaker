@@ -32,6 +32,14 @@
   font-family: 'LibreBaskerville-Regular';
   src: url(/fonts/basker/LibreBaskerville-Regular.ttf);
 }
+@font-face {
+  font-family: Brich;
+  src: url(/fonts/brich/BrichRegular.otf);
+}
+@font-face {
+  font-family: GroteskThin;
+  src: url(/fonts/grotesk/StudioGroteskThin.ttf);
+}
 .material-icons {
   font-family: 'Material Icons';
   font-weight: normal;

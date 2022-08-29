@@ -2,7 +2,8 @@
   <div class="videos">
     <nmessage :nmessage="nmessage" />
     <nerror :error="error" />
-    <div class="row" v-if="videos.length">
+    <Loader class="no-content center-align" v-if="loading" />
+    <div class="row" v-else>
       <div class="col s4 m4" v-for="(el,index) in videos" :key="index">
         <div class="card small">
           <div class="card-image">
@@ -25,7 +26,6 @@
         </div>
       </div>
     </div>
-    <div class="no-content center-align" v-else><span>no videos</span></div>  
   </div>
 </template>
 
@@ -69,12 +69,17 @@
 </style>
 
 <script>
+import Loader from './Loader';
 import { mapActions, mapGetters, mapMutations } from 'vuex'
 
 export default {
   name: 'HelloWorld',
+  components: {
+    Loader
+  },
   data: () => ({
     videos:[],
+    loading: false
   }),   
   methods: {
     ...mapActions(['auth']),
@@ -95,10 +100,13 @@ export default {
     ...mapGetters(['user','error','nmessage'])
   },
   async mounted(){
+    this.loading = true;
+
     await this.auth()
     axios.get(`http://127.0.0.1:8000/api/requests?user_id=${this.user.id}&type=video`)
     .then(res => {
-      this.videos = res.data
+      this.videos = res.data;
+      this.loading = false;
     })
     .then(() => {
       $(document).ready(function(){
