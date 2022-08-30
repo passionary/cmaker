@@ -1,50 +1,61 @@
 <template>
-  <div class="books" ref="books">
-  	<button class="save btn cyan" @click="show">save</button>
+  <div class="container" ref="books">
     <router-link v-if="$route.params.bk" to="/self-books" class="text"><i class="material-icons">arrow_back</i></router-link>
   	<nmessage :nmessage="nmessage" />
     <nerror :error="error" />
     <div class="input-field name-field">
-      <input id="name" :value="$route.params.bk.book.name" type="text" class="validate" placeholder="Book name" v-if="$route.params.bk && $route.params.bk.book" disabled="true">
-      <input v-model="name" type="text" id="name" class="validate" placeholder="Book name" v-else>
+      <input id="name" :value="$route.params.bk.book.name" type="text" class="validate form-control" placeholder="Book name" v-if="$route.params.bk && $route.params.bk.book" disabled="true">
+      <input v-model="name" type="text" id="name" class="validate form-control" placeholder="Book name" v-else>
     </div>  	
   	<div class="articles d-flex justify-content-between flex-wrap">
-  		<div class="article" v-for="(list,index) in bookData" ref="article">
+  		<div class="article" v-for="(list,index) in bookData" ref="article" :key="index">
         <div class="input-field">
-          <textarea v-if="$route.params.bk && $route.params.bk.book" id="first" class="materialize-textarea" :name="index" placeholder="left page" @change="save($event)" :value="list.left.get('content') ? list.left.get('content') : ''"></textarea>
-          <textarea id="first" class="materialize-textarea" :name="index" placeholder="left page" @change="save($event)" v-else></textarea>
+          <textarea v-if="$route.params.bk && $route.params.bk.book" id="first" class="materialize-textarea form-control" :name="index" placeholder="left page" @change="save($event)" :value="list.left.get('content') ? list.left.get('content') : ''"></textarea>
+          <textarea id="first" class="materialize-textarea form-control" :name="index" placeholder="left page" @change="save($event)" v-else></textarea>
         </div>
         <div class="input-field">
-          <textarea v-if="$route.params.bk && $route.params.bk.book" id="second" class="materialize-textarea" :name="index" placeholder="right page" @change="save($event)" :value="list.right.get('content') ? list.right.get('content') : ''"></textarea>
-          <textarea id="second" class="materialize-textarea" :name="index" placeholder="right page" @change="save($event)" v-else></textarea>
+          <textarea v-if="$route.params.bk && $route.params.bk.book" id="second" class="materialize-textarea form-control" :name="index" placeholder="right page" @change="save($event)" :value="list.right.get('content') ? list.right.get('content') : ''"></textarea>
+          <textarea id="second" class="materialize-textarea form-control" :name="index" placeholder="right page" @change="save($event)" v-else></textarea>
         </div>
 	    </div>      
   	</div>
-    <button class="adder btn cyan" @click="addPages">add pages</button>
+    <div class="submit-controls">
+      <button class="adder btn cyan" @click="addPages">add pages</button>
+      <button class="save btn" @click="show">save</button>
+    </div>
   </div>
 </template>
 
 <style scoped>
-	.adder{
+  .form-control {
+    margin-top: 20px !important;
+  }
+  .container {
     position: relative;
-    margin-top: 40px;
-    margin-bottom: 40px;
-    left:80%;
+    padding: 20px 0 100px 0;
+  }
+  .submit-controls {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+  }
+	.adder{
+    margin: 40px 25px 40px 0;
+	}
+  .save{
+    margin: 40px 0 40px 0;
 	}
   .text {
-    position: absolute;
-    left:18%;
-    top:2.4%;
   }
   .name-field {
     margin-top: 1.6rem !important;
   }
   .input-field {
-    width: 89%;
+    width: 100%;
     margin: 0 auto;
   }
 	.articles{
-		width: 80%;
+		width: 100%;
     border-top: 1px solid rgba(0,0,0,0.4);
 		margin: 0 auto;
     position: relative;
@@ -60,15 +71,6 @@
 	}
 	.appearing{
 		opacity: 1;
-	}
-	.save{
-		position: relative;
-		left: 5.2%;
-    top:10px;
-		letter-spacing: 3px;
-		text-transform: uppercase;
-		font-size: 14px;
-		width: 88px;
 	}
 </style>
 

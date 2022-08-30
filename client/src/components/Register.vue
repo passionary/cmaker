@@ -14,25 +14,32 @@
 				<input type="password" id="password" v-model="password">
 				<label for="password">Password</label>
 			</div>
-			<input type="submit" class="btn submit" @click.prevent="register">
-			<router-link class="log" to="/login">login</router-link>
+			<div class="flex-container">
+				<input type="submit" class="btn submit" @click.prevent="register">
+				<router-link class="btn log" to="/login">login</router-link>
+			</div>
 		</form>
 	</div>	
 </template>
 <style scoped>
+	.flex-container {
+		margin-top: 35px;
+		width: 100%;
+		display: flex;
+		justify-content: flex-end;
+	}
 	.register {
-		width: 80%;
+		width: 45%;
 		margin: 0 auto;
 		margin-top: 135px;
 	}
 	h3 {
-		letter-spacing: 3px;
-		font-size: 43px;
+		font-family: AlegreyaSans-Thin;
+		font-weight: bold;
 		margin-bottom: 30px;
 	}
 	.log{
 		margin-left: 15px;
-		font-size: 18px;
 	}
 </style>
 <script>

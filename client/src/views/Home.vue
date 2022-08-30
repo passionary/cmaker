@@ -70,7 +70,7 @@
     font-family: Brich;
     font-style: italic;
     font-weight: 100;
-    margin-right: 90px;
+    margin-right: 190px;
   }
 	.title h2 {
 		font-size: 36px;

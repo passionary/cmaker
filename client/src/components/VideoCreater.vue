@@ -1,15 +1,11 @@
 <template>
-  <div class="videos" ref="videos">
+  <div class="container videos" ref="videos">
     <nmessage :nmessage="nmessage" />
     <nerror :error="error" />
-    <div class="input-field" id="name">
-      <label for="name-field">Name</label>
-      <input type="text" name="item[name]" id="name-field" placeholder="name" v-model="name">
-    </div>    
-    <h5 class="form-title center-align">FORM SUBMIT</h5>
     <form id="form" enctype="multipart/form-data" action="http://127.0.0.1:8000/api/request" method="post" class="form-group mx-auto" @submit.prevent="submitHandler">
+      <input class="form-control" type="text" name="item[name]" id="name-field" placeholder="name" v-model="name">
       <input type="hidden" name="request[type]" value="video">
-      <textarea name="request[message]" class="materialize-textarea" placeholder="message" v-model="message">
+      <textarea name="request[message]" class="materialize-textarea form-control" placeholder="message" v-model="message">
       </textarea>
       <input type="text" name="request[author]" class="form-control" placeholder="author" v-model="author">
       <input type="hidden" name="item[name]" class="form-control" placeholder="name" :value="name">
@@ -17,7 +13,7 @@
       <input type="hidden" name="user_id" :value="user.id">
       <input type="hidden" name="request[email]" class="form-control" placeholder="name" v-model="user.email">
       <input type="hidden" name="MAX_FILE_SIZE" value="3000000000" />          
-      <div class="file-field input-field">
+      <div class="file-field form-control">
       <div class="btn">
           <span>File</span>
           <input type="file" name="file">
@@ -27,14 +23,23 @@
         </div>
       </div>      
       <input type="text" name="item[tags]" class="form-control" placeholder="tags" v-model="tags">
-      <input type="submit" class="btn submit-btn cyan">
+      <div class="submit-container">
+        <input type="submit" class="btn submit-btn">
+      </div>
     </form>
   </div>
 </template>
 
 <style scoped>
+  .container {
+    position: relative;
+    padding: 60px 0 100px 0;
+  }
   #form {
     margin-top: 2rem;
+  }
+  .form-control {
+    margin-top: 20px !important;
   }
   .form-title {
     margin-top: 4.2rem;
@@ -44,19 +49,18 @@
   #name {
     margin-top: 5rem;
   }
+  .submit-container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+  }
   .submit-btn {
     display: block;
-    margin: 0 auto;
-    margin-top: 2.2rem;
+    margin: 30px 0 0 0;
   }
   .videos h3{
     margin-left: 4%;  
   }
-  .videos {
-    width: 62%;
-    margin: 0 auto;
-    margin-top: 5%;
-  }  
 </style>
 
 <script>

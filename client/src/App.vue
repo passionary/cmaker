@@ -40,6 +40,9 @@
   font-family: GroteskThin;
   src: url(/fonts/grotesk/StudioGroteskThin.ttf);
 }
+.modal-overlay {
+  background: none;
+}
 .material-icons {
   font-family: 'Material Icons';
   font-weight: normal;
@@ -54,6 +57,70 @@
   direction: ltr;
   -webkit-font-feature-settings: 'liga';
   -webkit-font-smoothing: antialiased;
+}
+div[data-glide-el=controls] {
+  position:absolute;
+  left:0;
+  right:0;
+  top:40%;
+}
+button[data-glide-dir="<"] {
+  height: 80px;
+  left: -40px;
+}
+button[data-glide-dir="<"], button[data-glide-dir=">"] {
+    position: absolute;
+    border: 0;
+    outline: 0;
+    padding: 10px;
+    border-radius: 3px;
+    background-color: #73a2d1;
+    color: #fff;
+    cursor: pointer;
+}
+button[data-glide-dir=">"] {
+  height: 80px;
+  right: -40px;
+}
+.glide__arrows, .glide__bullets {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.glide__bullets {
+    text-align: center;
+}
+.glide__bullet {
+    background-color: #eee;
+    border: 0;
+    outline: 0;
+    width: 15px;
+    height: 15px;
+    border-radius: 100%;
+    cursor: pointer;
+}
+.glide__bullet:hover {
+    background-color: #d5d5d5;
+}
+.glide__bullet--active, .glide__bullet--active:hover {
+    background-color: #73a2d1;
+}
+
+.glide__bullet+.glide__bullet {
+    margin-left: 10px;
+}
+.glide__bullet:focus {
+  outline: none;
+  background-color: #73a2d1;
+}
+.glide__slides {
+  min-width: 1000px;
+  justify-content: center;
+}
+.glide__slide--active .card {
+  border: 2px solid #73a2d1;
 }
 </style>
 

@@ -2,12 +2,11 @@
   <div class="container mt-3">
     <nmessage :nmessage="nmessage" />
     <nerror :error="error" />
-    <button class="btn cyan save" @click="saveHandler">save</button>
-    <input type="text" ref="name" name="item[name]" placeholder="name" v-model="name">
-    <ckeditor v-model="content" :config="options" />
+    <input type="text" class="form-control" ref="name" name="item[name]" placeholder="name" v-model="name">
+    <ckeditor class="form-control" v-model="content" :config="options" />
     <form action="http://127.0.0.1:8000/api/request" id="form" method="post" class="form-group mx-auto mt-3" @submit.prevent="submitHandler">
       <input type="hidden" name="request[type]" value="article">
-      <textarea name="request[message]" class="materialize-textarea" placeholder="message" v-model="message">
+      <textarea name="request[message]" class="materialize-textarea form-control" placeholder="message" v-model="message">
       </textarea>
       <input type="text" name="request[author]" class="form-control" placeholder="author" v-model="author">
       <input type="hidden" name="request[email]" v-model="user.email" class="form-control">
@@ -15,22 +14,29 @@
       <input type="text" name="item[subject]" class="form-control" placeholder="subject" v-model="subject">
       <input type="hidden" name="item[content]" v-model="content">
       <input type="hidden" name="item[name]" class="form-control" placeholder="name" v-model="name">
-      <input type="text" name="item[tags]" placeholder="tags" v-model="tags">
-      <input type="submit" class="send btn cyan">
+      <input class="form-control" type="text" name="item[tags]" placeholder="tags" v-model="tags">
+      <div class="submit-controls">
+        <button class="btn cyan save" @click="saveHandler">save</button>
+        <input type="submit" class="send btn">
+      </div>
     </form>
   </div>
 </template>
 
 <style scoped>
+  .form-control {
+    margin-top: 20px !important;
+  }
+  .submit-controls {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+  }
   .save {
-    position: absolute;
-    top:12px;
+    margin: 40px 25px 40px 0;
   }
 	.send {
-    margin-top: 20px;
-    position: absolute;
-    bottom:40px;
-    right: 1px;
+    margin-top: 40px;
   }
   .container {
     position: relative;

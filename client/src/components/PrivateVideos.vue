@@ -3,29 +3,29 @@
     <nmessage :nmessage="nmessage" />
     <nerror :error="error" />
     <Loader class="no-content center-align" v-if="loading" />
-    <div class="row" v-else>
-      <div class="col s4 m4" v-for="(el,index) in videos" :key="index">
+    <List :data="videos" v-else-if="videos.length">
+      <template v-slot:default="props">
         <div class="card small">
           <div class="card-image">
-            <video :src="'http://127.0.0.1:8000/storage/' + el.path" controls=""></video>
+            <video :src="'http://127.0.0.1:8000/storage/' + props.el.path" controls=""></video>
           </div>          
           <div class="card-action">
-            <router-link :to="{name:'video-edit',params:{video:{video:el,request:el.request}}}" class="text">{{el.name}}</router-link>
-            <a class="remove modal-trigger" :href="'#modal' + el.id">&times;</a>
-            <div :id="'modal' + el.id" class="modal">
+            <router-link :to="{name:'video-edit',params:{video:{video:props.el,request:props.el.request}}}" class="text">{{props.el.name}}</router-link>
+            <a class="remove modal-trigger" :href="'#modal' + props.el.id">&times;</a>
+            <div :id="'modal' + props.el.id" class="modal">
               <div class="modal-content">
                 <h4>Are you sure ?</h4>
-                <p>You now deleting the {{el.name}} video(ID:{{el.id}})</p>
+                <p>You now deleting the {{props.el.name}} video(ID:{{props.el.id}})</p>
               </div>
               <div class="modal-footer">
                 <a href="#!" class="modal-close waves-effect waves-green btn-flat">CLOSE</a>
-                <a href="#!" class="modal-close waves-effect waves-green btn-flat" @click="remove(el.id)">DELETE</a>
+                <a href="#!" class="modal-close waves-effect waves-green btn-flat" @click="remove(props.el.id)">DELETE</a>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      </template>
+    </List>
   </div>
 </template>
 

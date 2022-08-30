@@ -73,6 +73,12 @@ const routes = [
         component: () => import('../components/VideoCreater'),
         meta:{auth:true},
       },
+      {
+        path: '/about',
+        name:'about',
+        component: () => import('../components/About'),
+        meta:{auth:true},
+      },
     ],
   },
   {

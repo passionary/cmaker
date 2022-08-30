@@ -3,32 +3,32 @@
     <nmessage :nmessage="nmessage" />
     <nerror :error="error" />
     <Loader class="no-content center-align" v-if="loading" />
-    <div class="row" v-else>
-      <div class="col s4 m4" v-for="(el,index) in articles" :key="index">
+    <List :data="articles" v-else-if="articles.length">
+      <template v-slot:default="props">
         <div class="card">
           <div class="card-image">
             <img src="/images/icons8-edit-file-80.png">
           </div>
           <div class="card-content">
-            <h5 class="">{{el.content ? el.content.slice(0,15) : ""}}</h5>
+            <h5 class="">{{props.el.content ? props.el.content.slice(0,15) : ""}}</h5>
           </div>
           <div class="card-action">
-            <a href="" @click.prevent="$router.push({name:'article-edit',params:{art:{article:el,request:el.request}}})">{{el.name}}</a>
-            <a class="remove modal-trigger" :href="'#modal' + el.id">&times;</a>
-            <div :id="'modal' + el.id" class="modal">
+            <a href="" @click.prevent="$router.push({name:'article-edit',params:{art:{article:props.el,request:props.el.request}}})">{{props.el.name}}</a>
+            <a class="remove modal-trigger" :href="'#modal' + props.el.id">&times;</a>
+            <div :id="'modal' + props.el.id" class="modal">
               <div class="modal-content">
                 <h4>Are you sure ?</h4>
-                <p>You now deleting the {{el.name}} article(ID:{{el.id}})</p>
+                <p>You now deleting the {{props.el.name}} article(ID:{{props.el.id}})</p>
               </div>
               <div class="modal-footer">
                 <a href="#!" class="modal-close waves-effect waves-green btn-flat">CLOSE</a>
-                <a href="#!" class="modal-close waves-effect waves-green btn-flat" @click="remove(el.id)">DELETE</a>
+                <a href="#!" class="modal-close waves-effect waves-green btn-flat" @click="remove(props.el.id)">DELETE</a>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      </template>
+    </List>
   </div>
 </template>
 
